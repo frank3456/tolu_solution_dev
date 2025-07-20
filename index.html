@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Web Developer & Economics Analyst</title>
+    <meta name="description" content="Tolu Ademuwagun | Web Developer and Economics Analyst helping businesses and individuals with clear, effective digital and economic solutions." />
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <img src="tolu.jpg" alt="Tolu Ademuwagun smiling in profile photo" class="profile-pic">
+        <h1 id="typewriter"></h1>
+        <p id="clock"></p>
+        <button class="btn" id="theme-toggle">Toggle Theme</button>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <div class="typewriter-container">
+            <p>Welcome, I’m glad you’re here.</p>
+            <p>I’m not just a web developer; I’m someone who believes technology and informed choices can change lives.</p>
+            <p>In a world where noise often drowns out what truly matters, I build websites and tools that help people and businesses cut through confusion, see clearly, and take action that moves them forward.</p>
+            <p>Whether you want to launch a business, understand how the economy affects your plans, or find practical solutions that work even in tough times, I’m here to help you build something real and lasting.</p>
+            <p>Let’s navigate these challenges together and turn your ideas into opportunities.</p>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="card">
+                <h3>Business Analysis Tool</h3>
+                <p>A responsive online calculator that helps small businesses forecast profits, manage expenses, and identify breakeven points using clear charts.</p>
+                <div class="business-tool-container">
+                    <input type="number" id="revenue" placeholder="Enter Monthly Revenue (₦)">
+                    <input type="number" id="expenses" placeholder="Enter Monthly Expenses (₦)">
+                    <button class="btn" id="calculate-btn">Calculate Profit</button>
+                    <p id="result"></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Economic Insight Newsletter</h3>
+                <p>A weekly newsletter simplifying complex economic issues like inflation, forex, and policy changes for individuals and businesses in Nigeria.</p>
+            </div>
+
+            <div class="card">
+                <h3>Data Dashboard Development</h3>
+                <p>An interactive dashboard displaying live or sample economic data, helping individuals and businesses make informed, data-driven decisions.</p>
+                <div class="dashboard-container">
+                    <canvas id="inflationChart" width="300" height="300"></canvas>
+                    <canvas id="fxChart" width="300" height="300"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Currency Converter</h3>
+                <p>Convert currencies using live exchange rates updated daily to support your business and personal financial decisions.</p>
+                <div class="business-tool-container">
+                    <input type="number" id="amount" placeholder="Amount">
+                    <select id="from-currency">
+                        <option value="USD">USD</option>
+                        <option value="NGN">NGN</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                    <select id="to-currency">
+                        <option value="NGN">NGN</option>
+                        <option value="USD">USD</option>
+                        <option value="EUR">EUR</option>
+                        <option value="GBP">GBP</option>
+                    </select>
+                    <button class="btn" id="convert-btn">Convert</button>
+                    <p id="conversion-result"></p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Responsive Site Checker</h3>
+                <p>Quickly test how your website looks on mobile, tablet, and desktop without leaving this page.</p>
+                <button class="btn" id="open-checker-btn">Check My Site Responsiveness</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="device-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h3>Select device to test your site</h3>
+            <input type="text" id="site-url" placeholder="Enter site URL (e.g., https://example.com)">
+            <div class="device-buttons">
+                <button class="btn device-btn" data-device="mobile">📱 Mobile</button>
+                <button class="btn device-btn" data-device="tablet">📲 Tablet</button>
+                <button class="btn device-btn" data-device="desktop">💻 Desktop</button>
+            </div>
+        </div>
+    </div>
+    <div id="device-preview-container"></div>
+
+    <section id="palette-generator">
+        <h2>Web Developer Color Palette Generator</h2>
+        <p>Generate clean color palettes for your projects and copy instantly for your workflow.</p>
+        <button class="btn" id="generate-palette">Generate Palette</button>
+        <div id="palette-container" class="palette-container"></div>
+    </section>
+
+    <div id="toast" class="toast">Copied to clipboard!</div>
+
+    <section id="tinubu">
+        <img src="tinubu.jpg" alt="Bola Ahmed Tinubu speaking at an event" class="profile-pic">
+        <h2>Tinubu’s Legacy and Nigeria’s Hope</h2>
+        <p>In a time when many leaders only spoke about change, Bola Ahmed Tinubu showed what it means to build. When he became governor, Lagos was a struggling, unsafe state, dependent on federal allocations and leaking revenues. Many doubted he could transform it, but Tinubu re-engineered Lagos into a self-sufficient economy, growing its internal revenue from ₦600 million to over ₦7 billion monthly through strategic reforms and effective governance.</p>
+        <p>There was a time when Lagos residents lived in fear. Armed robbers boldly wrote letters to entire streets, announcing the day they would come to rob, and they came without fear. Tinubu responded by creating the <strong>Rapid Response Squad (RRS)</strong> under the Lagos State Police, equipping them with vehicles and technology, turning Lagos from one of the most dangerous cities to one of the safest in Nigeria. Confidence returned, and businesses began to thrive.</p>
+        <p>They said it was impossible, but Tinubu created <strong>37 Local Council Development Areas (LCDAs)</strong>, bringing governance closer to the people, empowering communities, and expanding local participation in government. He established <strong>LASAMBUS</strong>, the first state-run medical emergency service, providing swift responses during emergencies and saving countless lives.</p>
+        <p>When the Atlantic Ocean threatened to swallow <strong>Victoria Island and Ahmadu Bello Way</strong> through erosion, many said protecting Lagos was impossible. Yet Tinubu began the <strong>Eko Atlantic City</strong> project, reclaiming land from the sea, protecting Lagos from flooding, and creating a new city that now attracts investors, creates jobs, and expands economic opportunities for Lagosians.</p>
+        <p>He didn’t just speak about fighting corruption; he blocked economic leakages using technology and transparency to reform the tax system, ensuring there were funds to build roads, hospitals, schools, and to launch the BRT system, which eases daily transportation for millions of Lagosians.</p>
+        <p>Now, as president, Tinubu is doing for Nigeria what he did for Lagos. For decades, Nigeria borrowed recklessly, wasted trillions on subsidies, and maintained multiple exchange rates that only benefited a few while millions suffered. Tinubu is removing these burdens, unifying the exchange rate to stop exploitation, attract investors, and encourage states to generate their own power so businesses can thrive, jobs can be created, and lives can improve.</p>
+        <p>These are not easy decisions, but they are necessary if Nigeria is to stand strong. Tinubu is not just leading; he is fighting to heal the economy so tomorrow’s generation can build on solid ground. While many leaders only think of immediate comfort and political survival, Tinubu thinks about what will truly benefit Nigeria in the long run, even if it is tough today.</p>
+        <p>In 2027, Nigeria will face another decision. If you want to see a Nigeria that can stand on its own, create real jobs, secure your hustle, and build a system that protects opportunities for every citizen, support Bola Ahmed Tinubu. He has done it before. He is doing it now. With your support, he will finish the job for Nigeria’s future.</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <p>Need a website for your business, want your site audited for improvements, or need your business idea analyzed? You can send me a message here on the website, message me on WhatsApp, or call me directly to get started.</p>
+        <form id="contact-form">
+            <input type="text" name="from_name" placeholder="Your Name" required>
+            <input type="email" name="from_email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="btn" id="send-button">Send Message</button>
+        </form>
+        <p id="form-status"></p>
+        <div class="contact-buttons">
+            <a href="https://wa.me/2348096654721" target="_blank" class="btn whatsapp-btn">Message me on WhatsApp</a>
+            <a href="tel:+2348032975135" class="btn call-btn">Call Me</a>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2025 Tolu Ademuwagun | Web Developer & Economics Analyst
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="script.js"></script>
+</body>
+</html>
