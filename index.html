@@ -7,176 +7,235 @@
     <meta name="description" content="Tolu Ademuwagun | Crafting modern websites and economic solutions for businesses and individuals." />
     <meta name="keywords" content="web developer, economics analyst, portfolio, Nigeria, responsive design" />
     <meta name="author" content="Tolu Ademuwagun" />
+    <!-- Open Graph Meta Tags for Social Sharing -->
+    <meta property="og:title" content="Tolu Ademuwagun | Web Developer & Economics Analyst" />
+    <meta property="og:description" content="Explore Tolu Ademuwagun's portfolio of modern web solutions and economic insights." />
+    <meta property="og:image" content="https://tolu-solution-dev.vercel.app/tolu.jpg" />
+    <meta property="og:url" content="https://tolu-solution-dev.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@Tolu7086" />
+    <meta name="twitter:title" content="Tolu Ademuwagun | Web Developer & Economics Analyst" />
+    <meta name="twitter:description" content="Explore Tolu Ademuwagun's portfolio of modern web solutions and economic insights." />
+    <meta name="twitter:image" content="https://tolu-solution-dev.vercel.app/tolu.jpg" />
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="style.css" as="style" />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" as="style" />
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<body>
+<body data-theme="light">
+    <!-- Preloader -->
     <div id="preloader" class="preloader">
         <div class="preloader-icon"></div>
         <p class="preloader-tagline">Crafting Your Future</p>
     </div>
 
-    <nav class="navbar">
+    <!-- Background Particles -->
+    <div id="particles-js" class="particles-background"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar glass-nav">
         <div class="logo">
             <a href="#hero" aria-label="Home">Tolu Ademuwagun</a>
         </div>
         <ul class="nav-links">
-            <li><a href="#about" aria-label="About section">About</a></li>
-            <li><a href="#projects" aria-label="Projects section">Projects</a></li>
-            <li><a href="#palette-generator" aria-label="Palette Generator section">Palette Generator</a></li>
-            <li><a href="#connect" aria-label="Connect section">Connect</a></li>
-            <li><button class="theme-toggle" aria-label="Toggle dark mode"></button></li>
+            <li><a href="#about" class="nav-link" aria-label="About section">About</a></li>
+            <li><a href="#projects" class="nav-link" aria-label="Projects section">Projects</a></li>
+            <li><a href="#palette-generator" class="nav-link" aria-label="Palette Generator section">Palette Generator</a></li>
+            <li><a href="#connect" class="nav-link" aria-label="Connect section">Connect</a></li>
+            <li><button class="theme-toggle" aria-label="Toggle between light and dark mode"></button></li>
         </ul>
-        <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <button class="menu-toggle" aria-label="Toggle mobile navigation menu">☰</button>
     </nav>
 
-    <section id="hero" class="hero">
+    <!-- Hero Section -->
+    <section id="hero" class="hero parallax-section" role="region" aria-labelledby="hero-title">
         <div class="hero-background"></div>
-        <div class="hero-content">
+        <div class="hero-content glass-card">
             <img src="tolu.jpg" alt="Tolu Ademuwagun, Web Developer and Economics Analyst" class="profile-pic" loading="lazy" />
-            <h1>
+            <h1 id="hero-title">
                 <span class="typewriter-text" data-text="Building Digital Solutions That Empower"></span>
             </h1>
             <p class="hero-subtitle">Web Developer & Economics Analyst creating impactful, modern solutions for businesses and individuals.</p>
-            <a href="#connect" class="btn primary-btn" aria-label="Get in touch">Get in Touch</a>
-        </div>
-    </section>
-
-    <section id="about" class="section">
-        <h2>About Me</h2>
-            <div class="about-text">
-                <p>I’m Tolu Ademuwagun, a web developer and economics analyst dedicated to transforming ideas into reality.</p>
-                <p>My mission is to build intuitive websites and provide clear economic insights that empower businesses and individuals to thrive in a complex world.</p>
-                <p>With a blend of technical expertise and analytical precision, I create solutions that are both functional and forward-thinking. Let’s turn your vision into something extraordinary.</p>
+            <div class="button-container">
+                <a href="#connect" class="btn primary-btn micro-interaction" aria-label="Get in touch">Get in Touch</a>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="section">
-        <h2>Featured Projects</h2>
-        <p class="section-subtitle">Discover my latest work, showcasing modern design and innovative functionality.</p>
-        <div class="projects-grid">
-            <article class="project-card" aria-labelledby="project1-title">
-                <img src="insightiq-screenshot.jpg" alt="InsightIQ Analytics Landing Page" class="project-img" loading="lazy" />
-                <div class="project-content">
-                    <h3 id="project1-title">InsightIQ Analytics 📊</h3>
-                    <p>A SaaS landing page with modern gradients and smooth animations, designed for client success.</p>
-                    <a href="https://insight-iq-analytics-yvnm.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="View InsightIQ Analytics">View Project</a>
+    <!-- Main Content Wrapper -->
+    <div class="content-wrapper">
+        <!-- About Section -->
+        <section id="about" class="section" role="region" aria-labelledby="about-title">
+            <div class="section-content glass-card">
+                <h2 id="about-title">About Me</h2>
+                <div class="about-text">
+                    <p>I’m Tolu Ademuwagun, a web developer and economics analyst dedicated to transforming ideas into reality.</p>
+                    <p>My mission is to build intuitive websites and provide clear economic insights that empower businesses and individuals to thrive in a complex world.</p>
+                    <p>With a blend of technical expertise and analytical precision, I create solutions that are both functional and forward-thinking. Let’s turn your vision into something extraordinary.</p>
                 </div>
-            </article>
-            <article class="project-card" aria-labelledby="project2-title">
-                <img src="store-screenshot.jpg" alt="Tolu Solution Store" class="project-img" loading="lazy" />
-                <div class="project-content">
-                    <h3 id="project2-title">Tolu Solution Store 🛍️</h3>
-                    <p>A responsive e-commerce platform with seamless navigation and checkout simulation.</p>
-                    <a href="https://tolu-solution-store.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Visit Tolu Solution Store">Visit Store</a>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section" role="region" aria-labelledby="projects-title">
+            <div class="section-content glass-card">
+                <h2 id="projects-title">Featured Work</h2>
+                <p class="section-subtitle">Discover my latest work, showcasing modern design and innovative functionality.</p>
+                <div class="grid-wrapper"> <!-- Added wrapper for centering -->
+                    <div class="projects-grid">
+                        <article class="project-card glass-card micro-interaction" aria-labelledby="project1-title">
+                            <img src="insightiq-screenshot.jpg" alt="InsightIQ Analytics Landing Page" class="project-img" loading="lazy" />
+                            <div class="project-content">
+                                <h3 id="project1-title">InsightIQ Analytics 📊</h3>
+                                <p>A SaaS landing page with modern gradients and smooth animations, designed for client success.</p>
+                                <a href="https://insight-iq-analytics-yvnm.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View InsightIQ Analytics">View Project</a>
+                            </div>
+                        </article>
+                        <article class="project-card glass-card micro-interaction" aria-labelledby="project2-title">
+                            <img src="store-screenshot.jpg" alt="Tolu Solution Store" class="project-img" loading="lazy" />
+                            <div class="project-content">
+                                <h3 id="project2-title">Tolu Solution Store 🛍️</h3>
+                                <p>A responsive e-commerce platform with seamless navigation and checkout simulation.</p>
+                                <a href="https://tolu-solution-store.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Visit Tolu Solution Store">Visit Store</a>
+                            </div>
+                        </article>
+                        <article class="project-card glass-card micro-interaction" aria-labelledby="project3-title">
+                            <img src="dashnext-screenshot.jpg" alt="NexaDash Analytics Dashboard" class="project-img" loading="lazy" />
+                            <div class="project-content">
+                                <h3 id="project3-title">NexaDash Analytics 📈</h3>
+                                <p>A dynamic dashboard with dark mode and animated data visualizations for actionable insights.</p>
+                                <a href="https://dash-next-kvem.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NexaDash Analytics">View Dashboard</a>
+                            </div>
+                        </article>
+                        <article class="project-card glass-card micro-interaction" aria-labelledby="project4-title">
+                            <img src="aerovue-alpha-screenshot.jpg" alt="Aerovue Alpha Streaming Platform" class="project-img" loading="lazy" />
+                            <div class="project-content">
+                                <h3 id="project4-title">Aerovue Alpha 🎥</h3>
+                                <p>A modern video streaming platform with responsive design and smooth playback.</p>
+                                <a href="https://aerovue-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View Aerovue Alpha">View Project</a>
+                            </div>
+                        </article>
+                        <article class="project-card glass-card micro-interaction" aria-labelledby="project5-title">
+                            <img src="palettecraft-screenshot.jpg" alt="PaletteCraft Color Tool" class="project-img" loading="lazy" />
+                            <div class="project-content">
+                                <h3 id="project5-title">PaletteCraft 🎨</h3>
+                                <p>An intuitive color palette generator for designers and developers.</p>
+                                <a href="https://design-mixology.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Try PaletteCraft">Try PaletteCraft</a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
-            </article>
-            <article class="project-card" aria-labelledby="project3-title">
-                <img src="dashnext-screenshot.jpg" alt="NexaDash Analytics Dashboard" class="project-img" loading="lazy" />
-                <div class="project-content">
-                    <h3 id="project3-title">NexaDash Analytics 📈</h3>
-                    <p>A dynamic dashboard with dark mode and animated data visualizations for actionable insights.</p>
-                    <a href="https://dash-next-kvem.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="View NexaDash Analytics">View Dashboard</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Tools Section -->
+    <section id="tools" class="section parallax-section" role="region" aria-labelledby="tools-title">
+        <div class="section-content glass-card">
+            <h2 id="tools-title">Interactive Tools</h2>
+            <p class="section-subtitle">Try my custom tools to enhance your business and development workflow.</p>
+            <div class="grid-wrapper"> <!-- Added wrapper for centering -->
+                <div class="tools-grid">
+                    <article class="tool-card glass-card micro-interaction" aria-labelledby="tool1-title">
+                        <h3 id="tool1-title">Business Analysis Tool</h3>
+                        <p>Calculate profits and breakeven points for your business with real-time insights.</p>
+                        <div class="tool-container">
+                            <input type="number" id="revenue" placeholder="Monthly Revenue (₦)" aria-label="Enter monthly revenue" />
+                            <input type="number" id="expenses" placeholder="Monthly Expenses (₦)" aria-label="Enter monthly expenses" />
+                            <button class="btn micro-interaction" id="calculate-btn" aria-label="Calculate profit">Calculate</button>
+                            <p id="result" aria-live="polite"></p>
+                        </div>
+                    </article>
+                    <article class="tool-card glass-card micro-interaction" aria-labelledby="tool2-title">
+                        <h3 id="tool2-title">Responsive Site Checker</h3>
+                        <p>Test your website’s responsiveness across devices in real time.</p>
+                        <div class="checker-container">
+                            <button class="btn micro-interaction" id="open-checker-btn" aria-label="Open responsiveness checker">Check Responsiveness</button>
+                        </div>
+                    </article>
                 </div>
-            </article>
-            <article class="project-card" aria-labelledby="project4-title">
-                <img src="aerovue-alpha-screenshot.jpg" alt="Aerovue Alpha Streaming Platform" class="project-img" loading="lazy" />
-                <div class="project-content">
-                    <h3 id="project4-title">Aerovue Alpha 🎥</h3>
-                    <p>A modern video streaming platform with responsive design and smooth playback.</p>
-                    <a href="https://aerovue-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="View Aerovue Alpha">View Project</a>
-                </div>
-            </article>
-            <article class="project-card" aria-labelledby="project5-title">
-                <img src="palettecraft-screenshot.jpg" alt="PaletteCraft Color Tool" class="project-img" loading="lazy" />
-                <div class="project-content">
-                    <h3 id="project5-title">PaletteCraft 🎨</h3>
-                    <p>An intuitive color palette generator for designers and developers.</p>
-                    <a href="https://design-mixology.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" aria-label="Try PaletteCraft">Try PaletteCraft</a>
-                </div>
-            </article>
+            </div>
         </div>
     </section>
 
-    <section id="tools" class="section">
-        <h2>Interactive Tools</h2>
-        <p class="section-subtitle">Try my custom tools to enhance your business and development workflow.</p>
-        <div class="tools-grid">
-            <article class="tool-card" aria-labelledby="tool1-title">
-                <h3 id="tool1-title">Business Analysis Tool</h3>
-                <p>Calculate profits and breakeven points for your business with real-time insights.</p>
-                <div class="tool-container">
-                    <input type="number" id="revenue" placeholder="Monthly Revenue (₦)" aria-label="Enter monthly revenue" />
-                    <input type="number" id="expenses" placeholder="Monthly Expenses (₦)" aria-label="Enter monthly expenses" />
-                    <button class="btn" id="calculate-btn" aria-label="Calculate profit">Calculate</button>
-                    <p id="result" aria-live="polite"></p>
-                </div>
-            </article>
-            <article class="tool-card" aria-labelledby="tool2-title">
-                <h3 id="tool2-title">Responsive Site Checker</h3>
-                <p>Test your website’s responsiveness across devices in real time.</p>
-                <button class="btn" id="open-checker-btn" aria-label="Open responsiveness checker">Check Responsiveness</button>
-            </article>
-        </div>
-    </section>
-
-    <div id="device-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <!-- Device Modal -->
+    <div id="device-modal" class="modal glass-card" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <div class="modal-content">
-            <button id="close-modal" class="close" aria-label="Close modal">&times;</button>
+            <button id="close-modal" class="close micro-interaction" aria-label="Close modal">&times;</button>
             <h3 id="modal-title">Test Website Responsiveness</h3>
             <input type="url" id="site-url" placeholder="Enter site URL (e.g., https://example.com)" aria-label="Website URL" />
             <div class="device-buttons">
-                <button class="btn device-btn" data-device="mobile" aria-label="Test on mobile">📱 Mobile</button>
-                <button class="btn device-btn" data-device="tablet" aria-label="Test on tablet">📲 Tablet</button>
-                <button class="btn device-btn" data-device="desktop" aria-label="Test on desktop">💻 Desktop</button>
+                <button class="btn device-btn micro-interaction" data-device="mobile" aria-label="Test on mobile">📱 Mobile</button>
+                <button class="btn device-btn micro-interaction" data-device="tablet" aria-label="Test on tablet">📲 Tablet</button>
+                <button class="btn device-btn micro-interaction" data-device="desktop" aria-label="Test on desktop">💻 Desktop</button>
             </div>
             <div id="device-preview-container" aria-live="polite"></div>
         </div>
     </div>
 
-    <section id="palette-generator" class="section">
-        <h2>Color Palette Generator</h2>
-        <p class="section-subtitle">Create unique color palettes for your projects with a single click.</p>
-        <button class="btn" id="generate-palette" aria-label="Generate new palette">Generate Palette</button>
-        <div id="palette-container" class="palette-container" aria-live="polite"></div>
+    <!-- Palette Generator Section -->
+    <section id="palette-generator" class="section parallax-section" role="region" aria-labelledby="palette-title">
+        <div class="section-content glass-card">
+            <h2 id="palette-title">Color Palette Generator</h2>
+            <p class="section-subtitle">Create unique color palettes for your projects with a single click.</p>
+            <button class="btn micro-interaction" id="generate-palette" aria-label="Generate new color palette">Generate Palette</button>
+            <div id="palette-container" class="palette-container" aria-live="polite"></div>
+        </div>
     </section>
-<section id="connect" class="section connect-section">
-    <h2 class="section-title">Connect With Me</h2>
-    <p class="section-subtitle">Reach out directly through my professional networks.</p>
-    <div class="connect-grid">
-        <a href="https://x.com/Tolu7086?t=tozBIFuXS9YWCOA7X0OVCw&s=09" target="_blank" rel="noopener noreferrer" class="connect-card social-link" aria-label="Follow on X">
-            <i class="fab fa-x-twitter"></i>
-            <span class="connect-label">X</span>
-        </a>
-        <a href="https://www.instagram.com/tolu7086_?igsh=MXdhejVkdXgzdnc5ZQ==" target="_blank" rel="noopener noreferrer" class="connect-card social-link" aria-label="Follow on Instagram">
-            <i class="fab fa-instagram"></i>
-            <span class="connect-label">Instagram</span>
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61578596138604" target="_blank" rel="noopener noreferrer" class="connect-card social-link" aria-label="Follow on Facebook">
-            <i class="fab fa-facebook-f"></i>
-            <span class="connect-label">Facebook</span>
-        </a>
-        <a href="https://wa.me/2348096654721" target="_blank" rel="noopener noreferrer" class="connect-card social-link" aria-label="Message on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-            <span class="connect-label">WhatsApp</span>
-        </a>
-        <a href="tel:+2348032975135" target="_blank" rel="noopener noreferrer" class="connect-card social-link" aria-label="Call me">
-            <i class="fas fa-phone"></i>
-            <span class="connect-label">Call</span>
-        </a>
-    </div>
-</section>
 
-<footer class="footer">
-    <p class="footer-text">&copy; 2025 Tolu Ademuwagun | Crafted with passion</p>
-</footer>
-    <div id="toast" class="toast" aria-live="polite">Copied to clipboard!</div>
+    <!-- Connect Section -->
+    <section id="connect" class="section connect-section parallax-section" role="region" aria-labelledby="connect-title">
+        <div class="section-content glass-card">
+            <h2 id="connect-title" class="section-title">Connect With Me</h2>
+            <p class="section-subtitle">Reach out directly through my professional networks.</p>
+            <div class="connect-grid">
+                <a href="https://x.com/Tolu7086?t=tozBIFuXS9YWCOA7X0OVCw&s=09" target="_blank" rel="noopener noreferrer" class="connect-card social-link glass-card micro-interaction" aria-label="Follow on X">
+                    <i class="fab fa-x-twitter"></i>
+                    <span class="connect-label">X</span>
+                </a>
+                <a href="https://www.instagram.com/tolu7086_?igsh=MXdhejVkdXgzdnc5ZQ==" target="_blank" rel="noopener noreferrer" class="connect-card social-link glass-card micro-interaction" aria-label="Follow on Instagram">
+                    <i class="fab fa-instagram"></i>
+                    <span class="connect-label">Instagram</span>
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61578596138604" target="_blank" rel="noopener noreferrer" class="connect-card social-link glass-card micro-interaction" aria-label="Follow on Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span class="connect-label">Facebook</span>
+                </a>
+                <a href="https://wa.me/2348096654721" target="_blank" rel="noopener noreferrer" class="connect-card social-link glass-card micro-interaction" aria-label="Message on WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span class="connect-label">WhatsApp</span>
+                </a>
+                <a href="tel:+2348032975135" target="_blank" rel="noopener noreferrer" class="connect-card social-link glass-card micro-interaction" aria-label="Call me">
+                    <i class="fas fa-phone"></i>
+                    <span class="connect-label">Call</span>
+                </a>
+            </div>
+        </div>
+    </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer class="footer glass-card">
+        <div class="footer-container">
+            <p class="footer-text">&copy; 2025 Tolu Ademuwagun | Crafted with passion</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn micro-interaction" aria-label="Back to top">↑</button>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast glass-card" aria-live="polite">Copied to clipboard!</div>
+
+    <!-- Scripts -->
+    <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script defer src="https://unpkg.com/scrollreveal"></script>
+    <script defer src="script.js"></script>
 </body>
 </html>
