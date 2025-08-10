@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 :root {
@@ -25,6 +26,7 @@ html {
     scroll-behavior: smooth;
     overflow-x: hidden;
     font-size: 70%;
+    box-sizing: inherit;
 }
 
 body {
@@ -117,8 +119,8 @@ body.dark-mode p, body.dark-mode .hero-subtitle, body.dark-mode .section-subtitl
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: -2;
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
 }
@@ -350,6 +352,8 @@ body.dark-mode .nav-links.active {
     padding: 6rem 2rem;
     overflow: hidden;
     margin-bottom: 5rem;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .hero-background {
@@ -506,6 +510,9 @@ body.dark-mode #back-to-top:hover {
     margin: 0 auto 5rem;
     text-align: center;
     z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .content-wrapper {
@@ -523,6 +530,9 @@ body.dark-mode #back-to-top:hover {
     transition: transform 0.4s ease;
     max-width: 90rem;
     margin-bottom: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 body.dark-mode .section-content.glass-card {
@@ -554,6 +564,9 @@ body.dark-mode .section-content.glass-card {
     display: flex;
     justify-content: center;
     width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .project-card.glass-card.micro-interaction {
@@ -811,6 +824,8 @@ body.dark-mode .close.micro-interaction {
     border-radius: 1rem;
     box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.05);
     margin-bottom: 5rem;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 body.dark-mode .connect-section.parallax-section {
