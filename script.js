@@ -18,7 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const themeToggle = document.querySelector('.theme-toggle');
   if (themeToggle) {
-    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const savedTheme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.body.setAttribute('data-theme', savedTheme);
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
     themeToggle.textContent = savedTheme === 'dark' ? '☀' : '🌙';
@@ -75,8 +76,13 @@ document.addEventListener('DOMContentLoaded', () => {
           resultDisplay.style.color = '#ef4444';
         } else {
           const profit = revenue - expenses;
-          resultDisplay.textContent = `✅ Your estimated monthly profit is: ₦${profit.toLocaleString()}`;
-          resultDisplay.style.color = '#2dd4bf';
+          if (profit >= 0) {
+            resultDisplay.textContent = `✅ Your estimated monthly profit is: ₦${profit.toLocaleString()}`;
+            resultDisplay.style.color = '#2dd4bf';
+          } else {
+            resultDisplay.textContent = `❌ You incurred a loss of: ₦${Math.abs(profit).toLocaleString()}`;
+            resultDisplay.style.color = '#ef4444';
+          }
         }
         calculateBtn.textContent = 'Calculate';
         calculateBtn.disabled = false;
@@ -301,21 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
         delay: index * 0.1
       });
     });
-    gsap.from('.hero-content', {
-      opacity: 0,
-      y: 80,
-      duration: 1,
-      ease: 'power2.out',
-      delay: 0.5
-    });
+    gsap.from('.hero-content', { opacity: 0, y: 80, duration: 1, ease: 'power2.out', delay: 0.5 });
     gsap.utils.toArray('.nav-link').forEach((link, index) => {
-      gsap.from(link, {
-        opacity: 0,
-        x: -20,
-        duration: 0.5,
-        ease: 'power2.out',
-        delay: 0.2 * index
-      });
+      gsap.from(link, { opacity: 0, x: -20, duration: 0.5, ease: 'power2.out', delay: 0.2 * index });
     });
     gsap.from('.palette-container', {
       opacity: 0,
