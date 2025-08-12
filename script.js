@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  let lastViewportWasDesktop = window.innerWidth >= 992; // Track initial viewport state
+
   function handleViewportChange() {
     const isDesktop = window.innerWidth >= 992;
     document.documentElement.style.setProperty('--viewport-width', `${window.innerWidth}px`);
@@ -22,17 +24,27 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       document.documentElement.style.transform = 'none';
     }
+    if (typeof particlesJS !== 'undefined' && window.pJSDom?.[0]?.pJS) {
+      window.pJSDom[0].pJS.fn.vendors.resize();
+    }
+    // Restart typewriter on mobile ↔ desktop transition
+    if (isDesktop !== lastViewportWasDesktop) {
+      const typewriterElement = document.querySelector('.typewriter-text');
+      if (typewriterElement && sessionStorage.getItem('typewriterCompleted') === 'true') {
+        sessionStorage.removeItem('typewriterCompleted'); // Clear flag to allow retyping
+        startTypewriter(); // Restart typewriter
+      }
+      lastViewportWasDesktop = isDesktop; // Update viewport state
+    }
   }
 
   const debouncedHandleViewportChange = debounce(handleViewportChange, 100);
   window.addEventListener('resize', debouncedHandleViewportChange);
   window.addEventListener('orientationchange', debouncedHandleViewportChange);
-  window.addEventListener('load', handleViewportChange);
 
   const themeToggle = document.querySelector('.theme-toggle');
   if (themeToggle) {
-    const savedTheme = localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     document.body.setAttribute('data-theme', savedTheme);
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
     themeToggle.textContent = savedTheme === 'dark' ? '☀' : '🌙';
@@ -68,19 +80,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const typewriterElement = document.querySelector('.typewriter-text');
-  if (typewriterElement) {
-    const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
-    let i = 0;
-    typewriterElement.textContent = '';
-    function type() {
-      if (i < text.length) {
-        typewriterElement.textContent += text.charAt(i++);
-        setTimeout(type, 100);
+  let typeTimeout; // Store timeout for clearing
+  function startTypewriter() {
+    if (typewriterElement) {
+      const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
+      let i = 0;
+      let currentText = '';
+      typewriterElement.textContent = '';
+      typewriterElement.style.position = 'relative';
+      typewriterElement.style.display = 'inline-block';
+      const cursor = document.createElement('span');
+      cursor.className = 'typewriter-cursor';
+      cursor.textContent = '|';
+      typewriterElement.appendChild(cursor);
+
+      function type() {
+        currentText = text.substring(0, i + 1);
+        typewriterElement.textContent = currentText;
+        i++;
+        if (i >= text.length) {
+          sessionStorage.setItem('typewriterCompleted', 'true'); // Mark as completed
+          typewriterElement.appendChild(cursor); // Ensure cursor remains
+          return; // Stop typing
+        }
+        typeTimeout = setTimeout(type, 80);
+        if (!typewriterElement.querySelector('.typewriter-cursor')) {
+          typewriterElement.appendChild(cursor);
+        }
       }
+      typeTimeout = setTimeout(type, 1000);
+    } else {
+      console.warn('Typewriter element (.typewriter-text) not found.');
     }
-    type();
+  }
+
+  // Check if typewriter has already run in this session
+  if (typewriterElement && sessionStorage.getItem('typewriterCompleted') === 'true') {
+    const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
+    typewriterElement.textContent = text;
+    typewriterElement.style.position = 'relative';
+    typewriterElement.style.display = 'inline-block';
+    const cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    cursor.textContent = '|';
+    typewriterElement.appendChild(cursor);
   } else {
-    console.warn('Typewriter element (.typewriter-text) not found.');
+    startTypewriter(); // Start typewriter if not completed
   }
 
   const calculateBtn = document.getElementById('calculate-btn');
@@ -103,17 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
           resultDisplay.style.color = '#ef4444';
         } else {
           const profit = revenue - expenses;
-          if (profit >= 0) {
-            resultDisplay.textContent = `✅ Your estimated monthly profit is: ₦${profit.toLocaleString()}`;
-            resultDisplay.style.color = '#2dd4bf';
-          } else {
-            resultDisplay.textContent = `❌ You incurred a loss of: ₦${Math.abs(profit).toLocaleString()}`;
-            resultDisplay.style.color = '#ef4444';
-          }
+          resultDisplay.textContent = profit >= 0
+            ? `✅ Your estimated monthly profit is: ₦${profit.toLocaleString()}`
+            : `❌ You incurred a loss of: ₦${Math.abs(profit).toLocaleString()}`;
+          resultDisplay.style.color = profit >= 0 ? '#2dd4bf' : '#ef4444';
         }
         calculateBtn.textContent = 'Calculate';
         calculateBtn.disabled = false;
-      }, 500);
+      }, 200);
     });
   } else {
     console.warn('Calculate button (#calculate-btn) or result display (#result) not found.');
@@ -152,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
             toastTimeout = setTimeout(() => {
               toast.classList.remove('show');
               toast.textContent = '';
-            }, 2500);
+            }, 2000);
           }).catch(() => {
             console.warn('Clipboard API not supported or failed.');
           });
@@ -181,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
           toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
             toast.textContent = '';
-          }, 2500);
+          }, 2000);
         }).catch(() => {
           console.warn('Clipboard API not supported or failed.');
         });
@@ -231,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
           toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
             toast.textContent = '';
-          }, 2500);
+          }, 2000);
           return;
         }
         const dimensions = {
@@ -246,15 +288,6 @@ document.addEventListener('DOMContentLoaded', () => {
         iframe.className = 'device-frame';
         iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-forms');
         iframe.setAttribute('aria-label', `Preview of ${url} on ${device}`);
-        iframe.onerror = () => {
-          clearTimeout(toastTimeout);
-          toast.textContent = '❌ Failed to load URL. Try another site.';
-          toast.classList.add('show');
-          toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-            toast.textContent = '';
-          }, 2500);
-        };
         devicePreviewContainer.innerHTML = '';
         devicePreviewContainer.appendChild(iframe);
         deviceModal.style.display = 'none';
@@ -271,262 +304,215 @@ document.addEventListener('DOMContentLoaded', () => {
         preloader.style.opacity = '0';
         setTimeout(() => {
           preloader.style.display = 'none';
-        }, 600);
-      }, 5000);
+        }, 400);
+      }, 2500);
       Promise.all([
-        ...Array.from(document.images).map(img => {
-          if (img.complete) return Promise.resolve();
-          return new Promise(resolve => {
+        ...Array.from(document.images).filter(img => !img.complete).map(img =>
+          new Promise(resolve => {
             img.addEventListener('load', resolve);
             img.addEventListener('error', resolve);
-          });
-        }),
-        ...Array.from(document.querySelectorAll('script')).map(script => {
-          if (script.complete) return Promise.resolve();
-          return new Promise(resolve => {
+          })
+        ),
+        ...Array.from(document.querySelectorAll('script')).filter(script => !script.complete).map(script =>
+          new Promise(resolve => {
             script.addEventListener('load', resolve);
             script.addEventListener('error', resolve);
-          });
-        })
+          })
+        )
       ]).then(() => {
         clearTimeout(fallbackTimeout);
         preloader.style.opacity = '0';
         setTimeout(() => {
           preloader.style.display = 'none';
-        }, 600);
+          handleViewportChange();
+          if (typeof particlesJS !== 'undefined') {
+            initParticlesJS();
+          }
+        }, 400);
       }).catch(err => {
         console.warn('Error loading assets for preloader:', err);
         clearTimeout(fallbackTimeout);
         preloader.style.opacity = '0';
         setTimeout(() => {
           preloader.style.display = 'none';
-        }, 600);
+          handleViewportChange();
+          if (typeof particlesJS !== 'undefined') {
+            initParticlesJS();
+          }
+        }, 400);
       });
     } else {
       console.warn('Preloader element (#preloader) not found.');
+      if (typeof particlesJS !== 'undefined') {
+        initParticlesJS();
+      }
     }
   });
+
+  function initParticlesJS() {
+    try {
+      const isOperaMini = navigator.userAgent.includes('Opera Mini');
+      const isDesktop = window.innerWidth >= 992;
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: isOperaMini ? 10 : isDesktop ? 25 : 20, density: { enable: true, value_area: 1000 } },
+          color: { value: '#ffffff' },
+          shape: { type: 'circle' },
+          opacity: { value: 0.3, random: true },
+          size: { value: 2, random: true },
+          line_linked: { enable: false },
+          move: { enable: true, speed: isOperaMini ? 0.5 : 1, direction: 'none', random: false }
+        },
+        interactivity: {
+          detect_on: 'canvas',
+          events: { onhover: { enable: false }, onclick: { enable: false } }
+        },
+        retina_detect: true
+      });
+    } catch (err) {
+      console.warn('Error initializing ParticlesJS:', err);
+    }
+  }
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     try {
       gsap.registerPlugin(ScrollTrigger);
       const isLowPerformance = navigator.userAgent.includes('Opera Mini') || window.innerWidth >= 992;
-      gsap.config({ autoSleep: 60, force3D: isLowPerformance ? false : 'auto' });
-      gsap.set('.footer', { autoAlpha: 1 });
-      gsap.utils.toArray('.connect-card.social-link').forEach((link, index) => {
-        gsap.from(link, {
-          opacity: 0,
-          y: 10,
-          duration: isLowPerformance ? 0.4 : 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '.connect-section',
-            start: 'top 95%',
-            toggleActions: 'play none none none'
-          },
-          delay: index * 0.1
-        });
+      gsap.config({ autoSleep: 120, force3D: false });
+      gsap.set('.footer, .project-card, .tool-card, .connect-card', { opacity: 1, visibility: 'visible' });
+      gsap.from('.connect-card.social-link', {
+        autoAlpha: 0,
+        y: 5,
+        duration: isLowPerformance ? 0.2 : 0.3,
+        ease: 'power2.out',
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: '.connect-section',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          immediateRender: true
+        }
       });
       gsap.to('#back-to-top', {
-        opacity: 1,
-        duration: 0.4,
+        autoAlpha: 1,
+        duration: 0.2,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: 'body',
           start: '100px top',
-          toggleActions: 'play none none reverse'
+          toggleActions: 'play none none reverse',
+          immediateRender: true
+        }
+      });
+      gsap.from('.project-card, .tool-card', {
+        autoAlpha: 0,
+        y: isLowPerformance ? 5 : 10,
+        duration: isLowPerformance ? 0.2 : 0.3,
+        ease: 'power2.out',
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: '.projects-grid, .tools-grid',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          immediateRender: true
+        }
+      });
+      gsap.from('.hero-content', {
+        autoAlpha: 0,
+        y: isLowPerformance ? 10 : 20,
+        duration: isLowPerformance ? 0.2 : 0.3,
+        ease: 'power2.out',
+        delay: isLowPerformance ? 0.1 : 0.2
+      });
+      gsap.from('.nav-link', {
+        autoAlpha: 0,
+        x: -5,
+        duration: isLowPerformance ? 0.1 : 0.2,
+        ease: 'power2.out',
+        stagger: 0.05
+      });
+      gsap.from('.palette-container', {
+        autoAlpha: 0,
+        duration: isLowPerformance ? 0.2 : 0.3,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.palette-container',
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          immediateRender: true
+        }
+      });
+      gsap.from('.footer', {
+        autoAlpha: 0,
+        y: isLowPerformance ? 5 : 10,
+        duration: isLowPerformance ? 0.2 : 0.3,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.footer',
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          immediateRender: true
         }
       });
       document.querySelectorAll('.parallax-section').forEach(section => {
         const bg = section.querySelector('.hero-background') || section;
         gsap.to(bg, {
-          y: isLowPerformance ? '5%' : '10%',
+          y: isLowPerformance ? '2%' : '4%',
           ease: 'none',
           scrollTrigger: {
             trigger: section,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: true
+            scrub: 1,
+            invalidateOnRefresh: true
           }
         });
-      });
-      gsap.utils.toArray('.project-card, .tool-card').forEach(card => {
-        gsap.from(card, {
-          opacity: 0,
-          y: isLowPerformance ? 10 : 20,
-          duration: isLowPerformance ? 0.4 : 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 95%',
-            toggleActions: 'play none none none'
-          }
-        });
-      });
-      gsap.utils.toArray('.connect-card').forEach((card, index) => {
-        gsap.from(card, {
-          opacity: 0,
-          y: isLowPerformance ? 8 : 15,
-          duration: isLowPerformance ? 0.4 : 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 95%',
-            toggleActions: 'play none none none'
-          },
-          delay: index * 0.1
-        });
-      });
-      gsap.from('.hero-content', {
-        opacity: 0,
-        y: isLowPerformance ? 30 : 60,
-        duration: isLowPerformance ? 0.5 : 0.8,
-        ease: 'power2.out',
-        delay: isLowPerformance ? 0.2 : 0.4
-      });
-      gsap.utils.toArray('.nav-link').forEach((link, index) => {
-        gsap.from(link, {
-          opacity: 0,
-          x: -10,
-          duration: isLowPerformance ? 0.2 : 0.4,
-          ease: 'power2.out',
-          delay: 0.2 * index
-        });
-      });
-      gsap.from('.palette-container', {
-        opacity: 0,
-        scale: 1,
-        duration: isLowPerformance ? 0.4 : 0.6,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.palette-container',
-          start: 'top 95%',
-          toggleActions: 'play none none none'
-        }
-      });
-      gsap.from('.footer', {
-        autoAlpha: 0,
-        y: isLowPerformance ? 8 : 15,
-        duration: isLowPerformance ? 0.5 : 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.footer',
-          start: 'top 95%',
-          toggleActions: 'play none none none'
-        }
       });
     } catch (err) {
       console.warn('Error initializing GSAP/ScrollTrigger:', err);
+      document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+      });
     }
   } else {
     console.warn('GSAP or ScrollTrigger not loaded.');
+    document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
+      el.style.opacity = '1';
+      el.style.visibility = 'visible';
+    });
   }
 
-  if (typeof particlesJS !== 'undefined') {
-    try {
-      const isOperaMini = navigator.userAgent.includes('Opera Mini');
-      particlesJS('particles-js', {
-        particles: {
-          number: { value: isOperaMini ? 20 : window.innerWidth >= 992 ? 40 : 60, density: { enable: true, value_area: 800 } },
-          color: { value: '#ffffff' },
-          shape: { type: 'circle' },
-          opacity: { value: 0.5, random: true },
-          size: { value: 3, random: true },
-          line_linked: { enable: !isOperaMini, distance: 120, color: '#ffffff', opacity: 0.3, width: 1 },
-          move: { enable: true, speed: isOperaMini ? 1 : 1.5, direction: 'none', random: false }
-        },
-        interactivity: {
-          detect_on: 'canvas',
-          events: { onhover: { enable: !isOperaMini && window.innerWidth < 992, mode: 'repulse' }, onclick: { enable: !isOperaMini && window.innerWidth < 992, mode: 'push' } },
-          modes: { repulse: { distance: 80 }, push: { particles_nb: 3 } }
-        },
-        retina_detect: true
-      });
-      const particlesContainer = document.getElementById('particles-js');
-      if (particlesContainer) {
-        let timeout;
-        particlesContainer.addEventListener('mouseenter', () => {
-          if (isOperaMini) return;
-          clearTimeout(timeout);
-          particlesJS('particles-js', {
-            particles: {
-              number: { value: window.innerWidth >= 992 ? 50 : 80, density: { enable: true, value_area: 800 } },
-              color: { value: '#ffffff' },
-              shape: { type: 'circle' },
-              opacity: { value: 0.6, random: true },
-              size: { value: 3.5, random: true },
-              line_linked: { enable: true, distance: 120, color: '#ffffff', opacity: 0.4, width: 1.2 },
-              move: { enable: true, speed: 2, direction: 'none', random: false }
-            },
-            interactivity: {
-              detect_on: 'canvas',
-              events: { onhover: { enable: window.innerWidth < 992, mode: 'repulse' }, onclick: { enable: window.innerWidth < 992, mode: 'push' } },
-              modes: { repulse: { distance: 80 }, push: { particles_nb: 3 } }
-            },
-            retina_detect: true
-          });
-        });
-        particlesContainer.addEventListener('mouseleave', () => {
-          if (isOperaMini) return;
-          timeout = setTimeout(() => {
-            particlesJS('particles-js', {
-              particles: {
-                number: { value: isOperaMini ? 20 : window.innerWidth >= 992 ? 40 : 60, density: { enable: true, value_area: 800 } },
-                color: { value: '#ffffff' },
-                shape: { type: 'circle' },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
-                line_linked: { enable: true, distance: 120, color: '#ffffff', opacity: 0.3, width: 1 },
-                move: { enable: true, speed: 1.5, direction: 'none', random: false }
-              },
-              interactivity: {
-                detect_on: 'canvas',
-                events: { onhover: { enable: window.innerWidth < 992, mode: 'repulse' }, onclick: { enable: window.innerWidth < 992, mode: 'push' } },
-                modes: { repulse: { distance: 80 }, push: { particles_nb: 3 } }
-              },
-              retina_detect: true
-            });
-          }, 300);
-        });
-      }
-    } catch (err) {
-      console.warn('Error initializing ParticlesJS:', err);
-    }
-  } else {
-    console.warn('ParticlesJS not loaded.');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof gsap !== 'undefined') {
+    gsap.globalTimeline.clear();
+    document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
+      el.style.opacity = '1';
+      el.style.visibility = 'visible';
+    });
   }
-
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    if (typeof gsap !== 'undefined') {
-      gsap.globalTimeline.clear();
-    }
-  }
-
-  const debouncedScrollTriggerRefresh = debounce(() => {
-    if (typeof ScrollTrigger !== 'undefined') {
-      try {
-        ScrollTrigger.refresh();
-      } catch (err) {
-        console.warn('Error refreshing ScrollTrigger:', err);
-      }
-    }
-    handleViewportChange();
-  }, 100);
-  window.addEventListener('resize', debouncedScrollTriggerRefresh);
 
   if (typeof ScrollReveal !== 'undefined') {
     try {
       ScrollReveal().reveal('.section', {
-        distance: '15px',
-        duration: navigator.userAgent.includes('Opera Mini') ? 500 : 600,
+        distance: '5px',
+        duration: navigator.userAgent.includes('Opera Mini') ? 200 : 300,
         easing: 'ease-out',
         origin: 'bottom',
-        interval: 80
+        interval: 25,
+        reset: false
       });
     } catch (err) {
       console.warn('Error initializing ScrollReveal:', err);
+      document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
+        el.style.opacity = '1';
+        el.style.visibility = 'visible';
+      });
     }
   } else {
     console.warn('ScrollReveal not loaded.');
+    document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
+      el.style.opacity = '1';
+      el.style.visibility = 'visible';
+    });
   }
 });
