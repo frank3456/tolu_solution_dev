@@ -139,7 +139,7 @@ body.dark-mode .section-subtitle {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -2;
+  z-index: -3;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
   will-change: transform;
 }
@@ -546,13 +546,16 @@ body.dark-mode #back-to-top:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 20rem;
 }
 
 .content-wrapper {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
   padding: 2rem 0;
-  width: 100%; /* Ensure full width */
-  max-width: 100vw; /* Prevent overflow */
+  width: 100%;
+  max-width: 100vw;
+  min-height: 20rem;
+  overflow: visible;
 }
 
 .section-content.glass-card {
@@ -593,6 +596,7 @@ body.dark-mode .section-content.glass-card {
   gap: 2.5rem;
   max-width: 90rem;
   margin: 0 auto;
+  min-height: 20rem;
 }
 
 .grid-wrapper {
@@ -616,6 +620,8 @@ body.dark-mode .section-content.glass-card {
   display: flex;
   flex-direction: column;
   margin-bottom: 1.5rem;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 body.dark-mode .project-card.glass-card {
@@ -650,6 +656,7 @@ body.dark-mode .project-card.glass-card {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
   gap: 2.5rem;
+  min-height: 20rem;
 }
 
 .tool-card.glass-card.micro-interaction {
@@ -661,6 +668,8 @@ body.dark-mode .project-card.glass-card {
   padding: 2rem;
   transition: all 0.4s ease;
   margin-bottom: 1.5rem;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 body.dark-mode .tool-card.glass-card {
@@ -874,6 +883,7 @@ body.dark-mode .connect-section.parallax-section {
   max-width: 64rem;
   margin: 4rem auto 0;
   justify-content: center;
+  min-height: 10rem;
 }
 
 .connect-card.glass-card.micro-interaction {
@@ -891,6 +901,8 @@ body.dark-mode .connect-section.parallax-section {
   box-shadow: var(--shadow);
   min-height: 10rem;
   animation: pulse 2s infinite ease-in-out;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 body.dark-mode .connect-card.glass-card {
@@ -925,6 +937,7 @@ body.dark-mode .connect-card.glass-card {
 
 .footer.glass-card {
   display: block !important;
+  visibility: visible !important;
   min-height: 8rem;
   width: 100%;
   background: linear-gradient(180deg, var(--primary) 10%, var(--dark-bg) 90%);
@@ -942,8 +955,7 @@ body.dark-mode .connect-card.glass-card {
   z-index: 10;
   margin-top: 6rem;
   margin-bottom: 2rem;
-  opacity: 1;
-  visibility: visible;
+  opacity: 1 !important;
 }
 
 body.dark-mode .footer.glass-card {
@@ -992,6 +1004,23 @@ body.dark-mode .toast.glass-card {
   100% { opacity: 0; }
 }
 
+.typewriter-cursor {
+  display: inline-block;
+  font-size: inherit;
+  color: var(--accent);
+  animation: blink 0.7s infinite;
+  margin-left: 0.2rem;
+}
+
+body.dark-mode .typewriter-cursor {
+  color: var(--secondary);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -1019,6 +1048,7 @@ body.dark-mode .toast.glass-card {
       "card1 card2 card3"
       "card4 card5 .";
     gap: 1.5rem;
+    min-height: 10rem;
   }
   .connect-card.glass-card.micro-interaction {
     min-height: 6.5rem;
@@ -1028,6 +1058,8 @@ body.dark-mode .toast.glass-card {
     padding: 2rem;
     margin-top: 5rem;
     min-height: 7rem;
+    display: block !important;
+    visibility: visible !important;
   }
 }
 
@@ -1063,6 +1095,7 @@ body.dark-mode .toast.glass-card {
   }
   .section {
     padding: 1rem 0.5rem;
+    min-height: 15rem;
   }
   .section-content.glass-card {
     padding: 1.5rem;
@@ -1078,6 +1111,7 @@ body.dark-mode .toast.glass-card {
     gap: 1.5rem;
     width: 100%;
     max-width: 100%;
+    min-height: 15rem;
   }
   .tools-grid {
     display: grid;
@@ -1085,6 +1119,7 @@ body.dark-mode .toast.glass-card {
     gap: 1.5rem;
     width: 100%;
     max-width: 100%;
+    min-height: 15rem;
   }
   .connect-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1092,6 +1127,7 @@ body.dark-mode .toast.glass-card {
       "card1 card2 card3"
       "card4 card5 .";
     gap: 1.2rem;
+    min-height: 10rem;
   }
   .connect-card.glass-card.micro-interaction {
     min-height: 6rem;
@@ -1107,6 +1143,8 @@ body.dark-mode .toast.glass-card {
     padding: 1.5rem;
     margin-top: 4rem;
     min-height: 6rem;
+    display: block !important;
+    visibility: visible !important;
   }
   .footer-text {
     font-size: clamp(1.1rem, 1.5vw, 1.4rem);
@@ -1135,6 +1173,7 @@ body.dark-mode .toast.glass-card {
   }
   .content-wrapper {
     max-width: 100vw;
+    min-height: 20rem;
   }
   .hero.parallax-section {
     min-height: 80vh;
@@ -1142,6 +1181,7 @@ body.dark-mode .toast.glass-card {
   }
   .section {
     max-width: 140rem;
+    min-height: 20rem;
   }
   .section-content.glass-card {
     max-width: 110rem;
@@ -1149,12 +1189,18 @@ body.dark-mode .toast.glass-card {
   .projects-grid,
   .tools-grid {
     max-width: 110rem;
+    min-height: 20rem;
   }
   .connect-grid {
     max-width: 80rem;
+    min-height: 10rem;
   }
   .device-frame {
     max-width: 100%;
+  }
+  .footer.glass-card {
+    display: block !important;
+    visibility: visible !important;
   }
 }
 
@@ -1162,6 +1208,7 @@ body.dark-mode .toast.glass-card {
   .section {
     padding: 6rem 4rem;
     max-width: 1920px;
+    min-height: 20rem;
   }
   .section-content.glass-card {
     max-width: 150rem;
@@ -1169,12 +1216,18 @@ body.dark-mode .toast.glass-card {
   .projects-grid,
   .tools-grid {
     max-width: 150rem;
+    min-height: 20rem;
   }
   .hero.parallax-section {
     min-height: 100vh;
   }
   .connect-grid {
     max-width: 100rem;
+    min-height: 10rem;
+  }
+  .footer.glass-card {
+    display: block !important;
+    visibility: visible !important;
   }
 }
 
@@ -1182,5 +1235,9 @@ body.dark-mode .toast.glass-card {
   * {
     animation: none !important;
     transition: none !important;
+  }
+  .footer.glass-card {
+    display: block !important;
+    visibility: visible !important;
   }
 }
