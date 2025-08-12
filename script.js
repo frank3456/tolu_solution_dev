@@ -11,30 +11,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  let lastViewportWasDesktop = window.innerWidth >= 992; // Track initial viewport state
+  let lastViewportWasDesktop = window.innerWidth >= 992;
 
   function handleViewportChange() {
     const isDesktop = window.innerWidth >= 992;
     document.documentElement.style.setProperty('--viewport-width', `${window.innerWidth}px`);
-    if (isDesktop) {
-      document.body.style.width = '100%';
-      document.body.style.overflowX = 'hidden';
-      document.documentElement.style.transform = 'scale(1)';
-      document.documentElement.style.transformOrigin = '0 0';
-    } else {
-      document.documentElement.style.transform = 'none';
+    document.body.style.transform = 'scale(1)'; // Prevent zooming issues
+    if (window.visualViewport) {
+      window.visualViewport.scale = 1;
     }
     if (typeof particlesJS !== 'undefined' && window.pJSDom?.[0]?.pJS) {
       window.pJSDom[0].pJS.fn.vendors.resize();
+      if (isDesktop !== lastViewportWasDesktop) {
+        initParticlesJS();
+      }
     }
-    // Restart typewriter on mobile ↔ desktop transition
     if (isDesktop !== lastViewportWasDesktop) {
       const typewriterElement = document.querySelector('.typewriter-text');
       if (typewriterElement && sessionStorage.getItem('typewriterCompleted') === 'true') {
-        sessionStorage.removeItem('typewriterCompleted'); // Clear flag to allow retyping
-        startTypewriter(); // Restart typewriter
+        sessionStorage.removeItem('typewriterCompleted');
+        startTypewriter();
       }
-      lastViewportWasDesktop = isDesktop; // Update viewport state
+      lastViewportWasDesktop = isDesktop;
     }
   }
 
@@ -54,8 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
       themeToggle.textContent = isDark ? '☀' : '🌙';
       localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
-  } else {
-    console.warn('Theme toggle (.theme-toggle) not found.');
   }
 
   const menuToggle = document.querySelector('.menu-toggle');
@@ -66,21 +62,22 @@ document.addEventListener('DOMContentLoaded', () => {
       menuToggle.textContent = isActive ? '✕' : '☰';
       menuToggle.setAttribute('aria-expanded', isActive.toString());
     });
-  } else {
-    console.warn('Menu toggle (.menu-toggle) or nav links (.nav-links) not found.');
   }
 
   const backToTop = document.getElementById('back-to-top');
   if (backToTop) {
+    window.addEventListener('scroll', debounce(() => {
+      const show = window.scrollY > 100 || document.documentElement.scrollTop > 100; // Fallback for cross-browser
+      backToTop.classList.toggle('show', show);
+      backToTop.setAttribute('aria-hidden', !show);
+    }, 50));
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-  } else {
-    console.warn('Back to top button (#back-to-top) not found.');
   }
 
   const typewriterElement = document.querySelector('.typewriter-text');
-  let typeTimeout; // Store timeout for clearing
+  let typeTimeout;
   function startTypewriter() {
     if (typewriterElement) {
       const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
@@ -89,43 +86,45 @@ document.addEventListener('DOMContentLoaded', () => {
       typewriterElement.textContent = '';
       typewriterElement.style.position = 'relative';
       typewriterElement.style.display = 'inline-block';
-      const cursor = document.createElement('span');
-      cursor.className = 'typewriter-cursor';
-      cursor.textContent = '|';
-      typewriterElement.appendChild(cursor);
-
+      if (!typewriterElement.querySelector('.typewriter-cursor')) {
+        const cursor = document.createElement('span');
+        cursor.className = 'typewriter-cursor';
+        cursor.textContent = '|';
+        typewriterElement.appendChild(cursor);
+      }
       function type() {
         currentText = text.substring(0, i + 1);
         typewriterElement.textContent = currentText;
         i++;
         if (i >= text.length) {
-          sessionStorage.setItem('typewriterCompleted', 'true'); // Mark as completed
-          typewriterElement.appendChild(cursor); // Ensure cursor remains
-          return; // Stop typing
+          sessionStorage.setItem('typewriterCompleted', 'true');
+          if (!typewriterElement.querySelector('.typewriter-cursor')) {
+            const cursor = document.createElement('span');
+            cursor.className = 'typewriter-cursor';
+            cursor.textContent = '|';
+            typewriterElement.appendChild(cursor);
+          }
+          return;
         }
         typeTimeout = setTimeout(type, 80);
-        if (!typewriterElement.querySelector('.typewriter-cursor')) {
-          typewriterElement.appendChild(cursor);
-        }
       }
       typeTimeout = setTimeout(type, 1000);
-    } else {
-      console.warn('Typewriter element (.typewriter-text) not found.');
     }
   }
 
-  // Check if typewriter has already run in this session
   if (typewriterElement && sessionStorage.getItem('typewriterCompleted') === 'true') {
     const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
     typewriterElement.textContent = text;
     typewriterElement.style.position = 'relative';
     typewriterElement.style.display = 'inline-block';
-    const cursor = document.createElement('span');
-    cursor.className = 'typewriter-cursor';
-    cursor.textContent = '|';
-    typewriterElement.appendChild(cursor);
+    if (!typewriterElement.querySelector('.typewriter-cursor')) {
+      const cursor = document.createElement('span');
+      cursor.className = 'typewriter-cursor';
+      cursor.textContent = '|';
+      typewriterElement.appendChild(cursor);
+    }
   } else {
-    startTypewriter(); // Start typewriter if not completed
+    startTypewriter();
   }
 
   const calculateBtn = document.getElementById('calculate-btn');
@@ -135,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const revenueInput = document.getElementById('revenue');
       const expensesInput = document.getElementById('expenses');
       if (!revenueInput || !expensesInput) {
-        console.warn('Revenue (#revenue) or expenses (#expenses) input not found.');
         return;
       }
       const revenue = parseFloat(revenueInput.value);
@@ -157,8 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
         calculateBtn.disabled = false;
       }, 200);
     });
-  } else {
-    console.warn('Calculate button (#calculate-btn) or result display (#result) not found.');
   }
 
   const generatePaletteBtn = document.getElementById('generate-palette');
@@ -195,8 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
               toast.classList.remove('show');
               toast.textContent = '';
             }, 2000);
-          }).catch(() => {
-            console.warn('Clipboard API not supported or failed.');
           });
         });
         paletteContainer.appendChild(colorCard);
@@ -224,15 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
             toast.classList.remove('show');
             toast.textContent = '';
           }, 2000);
-        }).catch(() => {
-          console.warn('Clipboard API not supported or failed.');
         });
       });
       paletteContainer.appendChild(copyAllBtn);
     }
     generatePaletteBtn.addEventListener('click', displayPalette);
-  } else {
-    console.warn('Palette generator elements (#generate-palette, #palette-container, #toast) not found.');
   }
 
   const openCheckerBtn = document.getElementById('open-checker-btn');
@@ -293,8 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         deviceModal.style.display = 'none';
       });
     });
-  } else {
-    console.warn('Device checker elements (#open-checker-btn, #device-modal, #close-modal, .device-btn, #site-url, #device-preview-container) not found.');
   }
 
   window.addEventListener('load', () => {
@@ -329,23 +317,9 @@ document.addEventListener('DOMContentLoaded', () => {
             initParticlesJS();
           }
         }, 400);
-      }).catch(err => {
-        console.warn('Error loading assets for preloader:', err);
-        clearTimeout(fallbackTimeout);
-        preloader.style.opacity = '0';
-        setTimeout(() => {
-          preloader.style.display = 'none';
-          handleViewportChange();
-          if (typeof particlesJS !== 'undefined') {
-            initParticlesJS();
-          }
-        }, 400);
       });
-    } else {
-      console.warn('Preloader element (#preloader) not found.');
-      if (typeof particlesJS !== 'undefined') {
-        initParticlesJS();
-      }
+    } else if (typeof particlesJS !== 'undefined') {
+      initParticlesJS();
     }
   });
 
@@ -369,9 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         retina_detect: true
       });
-    } catch (err) {
-      console.warn('Error initializing ParticlesJS:', err);
-    }
+    } catch (err) {}
   }
 
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -380,10 +352,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const isLowPerformance = navigator.userAgent.includes('Opera Mini') || window.innerWidth >= 992;
       gsap.config({ autoSleep: 120, force3D: false });
       gsap.set('.footer, .project-card, .tool-card, .connect-card', { opacity: 1, visibility: 'visible' });
+      gsap.from('.logo-t', {
+        autoAlpha: 0,
+        rotate: 45,
+        duration: isLowPerformance ? 0.3 : 0.5,
+        ease: 'power2.out',
+        delay: isLowPerformance ? 0.2 : 0.4
+      });
       gsap.from('.connect-card.social-link', {
         autoAlpha: 0,
         y: 5,
-        duration: isLowPerformance ? 0.2 : 0.3,
+        duration: isLowPerformance ? 0.15 : 0.3,
         ease: 'power2.out',
         stagger: 0.05,
         scrollTrigger: {
@@ -393,21 +372,10 @@ document.addEventListener('DOMContentLoaded', () => {
           immediateRender: true
         }
       });
-      gsap.to('#back-to-top', {
-        autoAlpha: 1,
-        duration: 0.2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: 'body',
-          start: '100px top',
-          toggleActions: 'play none none reverse',
-          immediateRender: true
-        }
-      });
       gsap.from('.project-card, .tool-card', {
         autoAlpha: 0,
         y: isLowPerformance ? 5 : 10,
-        duration: isLowPerformance ? 0.2 : 0.3,
+        duration: isLowPerformance ? 0.15 : 0.3,
         ease: 'power2.out',
         stagger: 0.05,
         scrollTrigger: {
@@ -420,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.from('.hero-content', {
         autoAlpha: 0,
         y: isLowPerformance ? 10 : 20,
-        duration: isLowPerformance ? 0.2 : 0.3,
+        duration: isLowPerformance ? 0.15 : 0.3,
         ease: 'power2.out',
         delay: isLowPerformance ? 0.1 : 0.2
       });
@@ -433,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       gsap.from('.palette-container', {
         autoAlpha: 0,
-        duration: isLowPerformance ? 0.2 : 0.3,
+        duration: isLowPerformance ? 0.15 : 0.3,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: '.palette-container',
@@ -445,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.from('.footer', {
         autoAlpha: 0,
         y: isLowPerformance ? 5 : 10,
-        duration: isLowPerformance ? 0.2 : 0.3,
+        duration: isLowPerformance ? 0.15 : 0.3,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: '.footer',
@@ -468,15 +436,8 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
-    } catch (err) {
-      console.warn('Error initializing GSAP/ScrollTrigger:', err);
-      document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
-        el.style.opacity = '1';
-        el.style.visibility = 'visible';
-      });
-    }
+    } catch (err) {}
   } else {
-    console.warn('GSAP or ScrollTrigger not loaded.');
     document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
       el.style.opacity = '1';
       el.style.visibility = 'visible';
@@ -501,15 +462,8 @@ document.addEventListener('DOMContentLoaded', () => {
         interval: 25,
         reset: false
       });
-    } catch (err) {
-      console.warn('Error initializing ScrollReveal:', err);
-      document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
-        el.style.opacity = '1';
-        el.style.visibility = 'visible';
-      });
-    }
+    } catch (err) {}
   } else {
-    console.warn('ScrollReveal not loaded.');
     document.querySelectorAll('.footer, .project-card, .tool-card, .connect-card').forEach(el => {
       el.style.opacity = '1';
       el.style.visibility = 'visible';
