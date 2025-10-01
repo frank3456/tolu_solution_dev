@@ -38,9 +38,26 @@
             <li><a href="#projects" class="nav-link" aria-label="Projects section">Projects</a></li>
             <li><a href="#palette-generator" class="nav-link" aria-label="Palette Generator section">Palette Generator</a></li>
             <li><a href="#connect" class="nav-link" aria-label="Connect section">Connect</a></li>
-            <li><button class="theme-toggle" aria-label="Toggle between light and dark mode"></button></li>
+            <li>
+                <button class="theme-toggle" aria-label="Toggle theme options" aria-expanded="false">
+                    <i class="fas fa-adjust theme-icon"></i>
+                </button>
+                <ul class="theme-dropdown glass-card" role="menu" aria-label="Theme selection options">
+                    <li role="menuitem">
+                        <button class="theme-option" data-theme="light" aria-label="Switch to light mode">Light</button>
+                    </li>
+                    <li role="menuitem">
+                        <button class="theme-option" data-theme="dark" aria-label="Switch to dark mode">Dark</button>
+                    </li>
+                    <li role="menuitem">
+                        <button class="theme-option" data-theme="system" aria-label="Follow system preference">System</button>
+                    </li>
+                </ul>
+            </li>
         </ul>
-        <button class="menu-toggle" aria-label="Toggle mobile navigation menu">☰</button>
+        <button class="menu-toggle" aria-label="Toggle mobile navigation menu">
+            <i class="fas fa-bars"></i>
+        </button>
     </nav>
     <section id="hero" class="hero parallax-section" role="region" aria-labelledby="hero-title">
         <div class="hero-background"></div>
@@ -69,47 +86,146 @@
         <section id="projects" class="section" role="region" aria-labelledby="projects-title">
             <div class="section-content glass-card">
                 <h2 id="projects-title">Featured Work</h2>
-                <p class="section-subtitle">Discover my latest work, showcasing modern design and innovative functionality.</p>
+                <p class="section-subtitle">Explore my latest projects, blending innovation, design, and functionality.</p>
                 <div class="grid-wrapper">
                     <div class="projects-grid">
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project1-title">
-                            <img src="insightiq-screenshot.jpg" alt="InsightIQ Analytics Landing Page" class="project-img" loading="lazy">
+                            <div class="project-image-wrapper">
+                                <img src="naija.jpg" alt="NaijaTruth.com hero image: Vibrant Nigerian cultural scene with green and white accents" class="project-img" loading="lazy">
+                                <div class="project-overlay" aria-hidden="true"></div>
+                            </div>
                             <div class="project-content">
-                                <h3 id="project1-title">InsightIQ Analytics 📊</h3>
-                                <p>A SaaS landing page with modern gradients and smooth animations, designed for client success.</p>
-                                <a href="https://insight-iq-analytics-yvnm.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View InsightIQ Analytics">View Project</a>
+                                <h3 id="project1-title">NaijaTruth.com</h3>
+                                <p class="project-subtitle">Nigerian news platform</p>
+                                <p class="project-desc">A mobile-first news website built for a client, featuring real-time news updates, user comments, and optimized for accessibility and low-bandwidth environments.</p>
+                                <div class="project-badges">
+                                    <span class="badge">HTML</span>
+                                    <span class="badge">CSS</span>
+                                    <span class="badge">JavaScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://naijatruth.com" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NaijaTruth.com live site">View Project</a>
+                                </div>
+                                <div class="project-details" aria-hidden="true">
+                                    <p>Challenges: Optimized for 3G networks.</p>
+                                    <p>Features: News aggregation, user comment system, and accessible design.</p>
+                                </div>
                             </div>
                         </article>
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project2-title">
-                            <img src="store-screenshot.jpg" alt="Tolu Solution Store" class="project-img" loading="lazy">
+                            <div class="project-image-wrapper">
+                                <img src="insightiq-screenshot.jpg" alt="InsightIQ Analytics Landing Page" class="project-img" loading="lazy">
+                                <div class="project-overlay" aria-hidden="true"></div>
+                            </div>
                             <div class="project-content">
-                                <h3 id="project2-title">Tolu Solution Store 🛍️</h3>
-                                <p>A responsive e-commerce platform with seamless navigation and checkout simulation.</p>
-                                <a href="https://tolu-solution-store.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Visit Tolu Solution Store">Visit Store</a>
+                                <h3 id="project2-title">InsightIQ Analytics</h3>
+                                <p class="project-subtitle">SaaS analytics platform</p>
+                                <p class="project-desc">A landing page designed to showcase a SaaS analytics platform with smooth animations and vibrant design.</p>
+                                <div class="project-badges">
+                                    <span class="badge">HTML5</span>
+                                    <span class="badge">CSS3</span>
+                                    <span class="badge">JavaScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://insight-iq-analytics-yvnm.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View InsightIQ Analytics live site">View Project</a>
+                                </div>
+                                <div class="project-details" aria-hidden="true">
+                                    <p>Features: Smooth scroll animations and responsive layout.</p>
+                                    <p>Focus: Optimized for performance and user engagement.</p>
+                                </div>
                             </div>
                         </article>
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project3-title">
-                            <img src="dashnext-screenshot.jpg" alt="NexaDash Analytics Dashboard" class="project-img" loading="lazy">
+                            <div class="project-image-wrapper">
+                                <img src="store-screenshot.jpg" alt="Tolu Solution Store" class="project-img" loading="lazy">
+                                <div class="project-overlay" aria-hidden="true"></div>
+                            </div>
                             <div class="project-content">
-                                <h3 id="project3-title">NexaDash Analytics 📈</h3>
-                                <p>A dynamic dashboard with dark mode and animated data visualizations for actionable insights.</p>
-                                <a href="https://dash-next-kvem.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NexaDash Analytics">View Dashboard</a>
+                                <h3 id="project3-title">Tolu Solution Store</h3>
+                                <p class="project-subtitle">E-commerce platform</p>
+                                <p class="project-desc">A responsive e-commerce platform with intuitive navigation and a simulated checkout experience.</p>
+                                <div class="project-badges">
+                                    <span class="badge">HTML</span>
+                                    <span class="badge">CSS</span>
+                                    <span class="badge">JavaScript</span>
+                                    <span class="badge">React</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://tolu-solution-store.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Visit Tolu Solution Store">Visit Store</a>
+                                </div>
+                                <div class="project-details" aria-hidden="true">
+                                    <p>Features: Product listings and checkout flow simulation.</p>
+                                    <p>Focus: User-friendly design and mobile responsiveness.</p>
+                                </div>
                             </div>
                         </article>
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project4-title">
-                            <img src="aerovue-alpha-screenshot.jpg" alt="Aerovue Alpha Streaming Platform" class="project-img" loading="lazy">
+                            <div class="project-image-wrapper">
+                                <img src="dashnext-screenshot.jpg" alt="NexaDash Analytics Dashboard" class="project-img" loading="lazy">
+                                <div class="project-overlay" aria-hidden="true"></div>
+                            </div>
                             <div class="project-content">
-                                <h3 id="project4-title">Aerovue Alpha 🎥</h3>
-                                <p>A modern video streaming platform with responsive design and smooth playback.</p>
-                                <a href="https://aerovue-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View Aerovue Alpha">View Project</a>
+                                <h3 id="project4-title">NexaDash Analytics</h3>
+                                <p class="project-subtitle">Data dashboard</p>
+                                <p class="project-desc">A dashboard designed for data visualization with dark mode and interactive charts.</p>
+                                <div class="project-badges">
+                                    <span class="badge">HTML5</span>
+                                    <span class="badge">CSS3</span>
+                                    <span class="badge">JavaScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://dash-next-kvem.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NexaDash Analytics">View Dashboard</a>
+                                </div>
+                                <div class="project-details" aria-hidden="true">
+                                    <p>Features: Interactive charts and theme toggling.</p>
+                                    <p>Focus: Real-time data display and usability.</p>
+                                </div>
                             </div>
                         </article>
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project5-title">
-                            <img src="palettecraft-screenshot.jpg" alt="PaletteCraft Color Tool" class="project-img" loading="lazy">
+                            <div class="project-image-wrapper">
+                                <img src="aerovue-alpha-screenshot.jpg" alt="Aerovue Alpha Streaming Platform" class="project-img" loading="lazy">
+                                <div class="project-overlay" aria-hidden="true"></div>
+                            </div>
                             <div class="project-content">
-                                <h3 id="project5-title">PaletteCraft 🎨</h3>
-                                <p>An intuitive color palette generator for designers and developers.</p>
-                                <a href="https://design-mixology.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Try PaletteCraft">Try PaletteCraft</a>
+                                <h3 id="project5-title">Aerovue Alpha</h3>
+                                <p class="project-subtitle">Video streaming platform</p>
+                                <p class="project-desc">A responsive streaming service designed for smooth video playback and adaptive layouts.</p>
+                                <div class="project-badges">
+                                    <span class="badge">HTML5</span>
+                                    <span class="badge">CSS3</span>
+                                    <span class="badge">JavaScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://aerovue-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View Aerovue Alpha">View Project</a>
+                                </div>
+                                <div class="project-details" aria-hidden="true">
+                                    <p>Features: Adaptive streaming and responsive design.</p>
+                                    <p>Focus: Optimized for low-bandwidth environments.</p>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="project-card glass-card micro-interaction" aria-labelledby="project6-title">
+                            <div class="project-image-wrapper">
+                                <img src="palettecraft-screenshot.jpg" alt="PaletteCraft Color Tool" class="project-img" loading="lazy">
+                                <div class="project-overlay" aria-hidden="true"></div>
+                            </div>
+                            <div class="project-content">
+                                <h3 id="project6-title">PaletteCraft</h3>
+                                <p class="project-subtitle">Color palette tool</p>
+                                <p class="project-desc">A tool for designers and developers to generate and preview color palettes.</p>
+                                <div class="project-badges">
+                                    <span class="badge">HTML5</span>
+                                    <span class="badge">CSS3</span>
+                                    <span class="badge">JavaScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://design-mixology.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Try PaletteCraft">Try PaletteCraft</a>
+                                </div>
+                                <div class="project-details" aria-hidden="true">
+                                    <p>Features: Instant color previews and contrast checker.</p>
+                                    <p>Focus: Accessibility and ease of use.</p>
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -150,9 +266,9 @@
             <h3 id="modal-title">Test Website Responsiveness</h3>
             <input type="url" id="site-url" placeholder="Enter site URL (e.g., https://example.com)" aria-label="Website URL">
             <div class="device-buttons">
-                <button class="btn device-btn micro-interaction" data-device="mobile" aria-label="Test on mobile">📱 Mobile</button>
-                <button class="btn device-btn micro-interaction" data-device="tablet" aria-label="Test on tablet">📲 Tablet</button>
-                <button class="btn device-btn micro-interaction" data-device="desktop" aria-label="Test on desktop">💻 Desktop</button>
+                <button class="btn device-btn micro-interaction" data-device="mobile" aria-label="Test on mobile">Mobile</button>
+                <button class="btn device-btn micro-interaction" data-device="tablet" aria-label="Test on tablet">Tablet</button>
+                <button class="btn device-btn micro-interaction" data-device="desktop" aria-label="Test on desktop">Desktop</button>
             </div>
             <div id="device-preview-container" aria-live="polite"></div>
         </div>
@@ -198,12 +314,13 @@
             <p class="footer-text">© 2025 Tolu Ademuwagun | Crafted with passion</p>
         </div>
     </footer>
-    <button id="back-to-top" class="btn micro-interaction" aria-label="Back to top">↑</button>
+    <button id="back-to-top" class="btn micro-interaction" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i> Top
+    </button>
     <div id="toast" class="toast glass-card" aria-live="polite">Copied to clipboard!</div>
     <script defer src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script defer src="https://unpkg.com/scrollreveal"></script>
     <script defer src="script.js"></script>
 </body>

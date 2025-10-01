@@ -1,33 +1,84 @@
 document.addEventListener('DOMContentLoaded', () => {
   function handleViewportChange() {
-    const isDesktop = window.innerWidth >= 992;
+    const isDesktop = window.innerWidth >= 769;
     document.documentElement.style.setProperty('--viewport-width', `${window.innerWidth}px`);
     if (isDesktop) {
       document.body.style.width = '100%';
       document.body.style.overflowX = 'hidden';
       window.scrollTo(0, 0);
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 100);
+      window.dispatchEvent(new Event('resize'));
     }
   }
 
-  window.addEventListener('resize', handleViewportChange);
+  let resizeTimeout;
+  function debounceViewportChange() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(handleViewportChange, 100);
+  }
+
+  window.addEventListener('resize', debounceViewportChange);
   window.addEventListener('orientationchange', handleViewportChange);
   window.addEventListener('load', handleViewportChange);
 
   const themeToggle = document.querySelector('.theme-toggle');
-  if (themeToggle) {
-    const savedTheme = localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const themeDropdown = document.querySelector('.theme-dropdown');
+  const themeOptions = document.querySelectorAll('.theme-option');
+  if (themeToggle && themeDropdown && themeOptions.length) {
+    const savedTheme = localStorage.getItem('theme') || (
+      window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    );
     document.body.setAttribute('data-theme', savedTheme);
     document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-    themeToggle.textContent = savedTheme === 'dark' ? '☀' : '🌙';
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    themeIcon.className = `fas ${savedTheme === 'dark' ? 'fa-moon' : 'fa-sun'} theme-icon`;
+
     themeToggle.addEventListener('click', () => {
-      const isDark = document.body.classList.toggle('dark-mode');
-      document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
-      themeToggle.textContent = isDark ? '☀' : '🌙';
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      const isExpanded = themeToggle.getAttribute('aria-expanded') === 'true';
+      themeToggle.setAttribute('aria-expanded', !isExpanded);
+      themeDropdown.classList.toggle('active', !isExpanded);
+    });
+
+    themeOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        const theme = option.getAttribute('data-theme');
+        document.body.setAttribute('data-theme', theme);
+        document.body.classList.toggle('dark-mode', theme === 'dark');
+        localStorage.setItem('theme', theme);
+        themeIcon.className = `fas ${theme === 'dark' ? 'fa-moon' : 'fa-sun'} theme-icon`;
+        themeDropdown.classList.remove('active');
+        themeToggle.setAttribute('aria-expanded', 'false');
+      });
+
+      option.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          option.click();
+        }
+      });
+    });
+
+    document.addEventListener('click', e => {
+      if (!themeToggle.contains(e.target) && !themeDropdown.contains(e.target)) {
+        themeDropdown.classList.remove('active');
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && themeDropdown.classList.contains('active')) {
+        themeDropdown.classList.remove('active');
+        themeToggle.setAttribute('aria-expanded', 'false');
+        themeToggle.focus();
+      }
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      if (localStorage.getItem('theme') === 'system') {
+        const theme = e.matches ? 'dark' : 'light';
+        document.body.setAttribute('data-theme', theme);
+        document.body.classList.toggle('dark-mode', theme === 'dark');
+        themeIcon.className = `fas ${theme === 'dark' ? 'fa-moon' : 'fa-sun'} theme-icon`;
+      }
     });
   }
 
@@ -35,9 +86,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const navLinks = document.querySelector('.nav-links');
   if (menuToggle && navLinks) {
     menuToggle.addEventListener('click', () => {
-      const isActive = navLinks.classList.toggle('active');
-      menuToggle.textContent = isActive ? '✕' : '☰';
-      menuToggle.setAttribute('aria-expanded', isActive.toString());
+      if (window.innerWidth <= 768) {
+        const isActive = navLinks.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', isActive.toString());
+        menuToggle.querySelector('i').className = `fas ${isActive ? 'fa-times' : 'fa-bars'}`;
+        if (isActive) {
+          const focusableElements = navLinks.querySelectorAll('a, button');
+          focusableElements[0].focus();
+          document.addEventListener('keydown', trapFocus);
+        } else {
+          document.removeEventListener('keydown', trapFocus);
+        }
+      }
+    });
+
+    function trapFocus(e) {
+      const focusableElements = navLinks.querySelectorAll('a, button');
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement.focus();
+        }
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        navLinks.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.querySelector('i').className = 'fas fa-bars';
+        document.removeEventListener('keydown', trapFocus);
+      }
     });
   }
 
@@ -54,14 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let i = 0;
     typewriterElement.innerHTML = '<span class="typed-text"></span><span class="modern-caret"></span>';
     const typedTextElement = typewriterElement.querySelector('.typed-text');
-    // Initialize audio for typing sound
-    const typeSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-typewriter-hit-1362.mp3'); // Replace with your sound file
-    typeSound.volume = 0.3; // Adjust volume (0 to 1)
     function type() {
       if (i < text.length) {
         typedTextElement.textContent += text.charAt(i++);
-        typeSound.currentTime = 0; // Reset sound to start
-        typeSound.play().catch(() => {}); // Play sound, ignore errors if browser blocks
         setTimeout(type, 100);
       }
     }
@@ -78,15 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
       calculateBtn.textContent = 'Calculating...';
       setTimeout(() => {
         if (isNaN(revenue) || isNaN(expenses) || revenue < 0 || expenses < 0) {
-          resultDisplay.textContent = '❌ Please enter valid positive numbers.';
+          resultDisplay.textContent = 'Error: Please enter valid positive numbers.';
           resultDisplay.style.color = '#ef4444';
         } else {
           const profit = revenue - expenses;
           if (profit >= 0) {
-            resultDisplay.textContent = `✅ Your estimated monthly profit is: ₦${profit.toLocaleString()}`;
+            resultDisplay.textContent = `Success: Your estimated monthly profit is: ₦${profit.toLocaleString()}`;
             resultDisplay.style.color = '#2dd4bf';
           } else {
-            resultDisplay.textContent = `❌ You incurred a loss of: ₦${Math.abs(profit).toLocaleString()}`;
+            resultDisplay.textContent = `Error: You incurred a loss of: ₦${Math.abs(profit).toLocaleString()}`;
             resultDisplay.style.color = '#ef4444';
           }
         }
@@ -124,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
         colorCard.addEventListener('click', () => {
           navigator.clipboard.writeText(color).then(() => {
             clearTimeout(toastTimeout);
-            toast.textContent = `✅ ${color} copied!`;
+            toast.textContent = `Success: ${color} copied!`;
             toast.classList.add('show');
             toastTimeout = setTimeout(() => {
               toast.classList.remove('show');
@@ -136,9 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const closeBtn = document.createElement('button');
       closeBtn.className = 'close-palette micro-interaction';
-      closeBtn.textContent = '✕';
+      closeBtn.innerHTML = '<i class="fas fa-times"></i>';
       closeBtn.setAttribute('aria-label', 'Close palette');
-      closeBtn.style.display = 'block';
       closeBtn.addEventListener('click', () => {
         paletteContainer.classList.remove('active');
         paletteContainer.innerHTML = '';
@@ -151,7 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
       copyAllBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(colors.join(', ')).then(() => {
           clearTimeout(toastTimeout);
-          toast.textContent = '✅ All colors copied!';
+          toast.textContent = 'Success: All colors copied!';
           toast.classList.add('show');
           toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
@@ -197,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const url = siteUrlInput.value.trim();
         if (!/^https?:\/\//.test(url)) {
           clearTimeout(toastTimeout);
-          toast.textContent = '❌ Please enter a valid URL (e.g., https://example.com)';
+          toast.textContent = 'Error: Please enter a valid URL (e.g., https://example.com)';
           toast.classList.add('show');
           toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
@@ -219,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
         iframe.setAttribute('aria-label', `Preview of ${url} on ${device}`);
         iframe.onerror = () => {
           clearTimeout(toastTimeout);
-          toast.textContent = '❌ Failed to load URL. Try another site.';
+          toast.textContent = 'Error: Failed to load URL. Try another site.';
           toast.classList.add('show');
           toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
@@ -249,20 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.config({ autoSleep: 60, force3D: false });
     }
     gsap.set('.footer', { autoAlpha: 1 });
-    gsap.utils.toArray('.footer-socials a').forEach((link, index) => {
-      gsap.from(link, {
-        opacity: 0,
-        y: 10,
-        duration: 0.8,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.footer',
-          start: 'top bottom',
-          toggleActions: 'play none none none'
-        },
-        delay: index * 0.1
-      });
-    });
     gsap.to('#back-to-top', {
       opacity: 1,
       duration: 0.5,
@@ -270,7 +334,8 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollTrigger: {
         trigger: 'body',
         start: '100px top',
-        toggleActions: 'play none none reverse'
+        toggleActions: 'play none none reverse',
+        toggleClass: 'show'
       }
     });
     document.querySelectorAll('.parallax-section').forEach(section => {
@@ -286,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
-    gsap.utils.toArray('.project-card, .tool-card').forEach(card => {
+    gsap.utils.toArray('.project-card, .tool-card').forEach((card, index) => {
       gsap.from(card, {
         opacity: 0,
         y: 30,
@@ -296,6 +361,43 @@ document.addEventListener('DOMContentLoaded', () => {
           trigger: card,
           start: 'top 90%',
           toggleActions: 'play none none none'
+        }
+      });
+      card.addEventListener('mouseenter', () => {
+        const isFirstCard = index === 0;
+        gsap.to(card, {
+          rotationX: isFirstCard ? 8 : 3,
+          rotationY: isFirstCard ? 8 : 3,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+        if (isFirstCard) {
+          gsap.to(card.querySelector('.btn.micro-interaction'), {
+            backgroundColor: '#008c3f',
+            duration: 0.3
+          });
+        }
+        const details = card.querySelector('.project-details');
+        if (details) {
+          details.setAttribute('aria-hidden', 'false');
+        }
+      });
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        });
+        if (index === 0) {
+          gsap.to(card.querySelector('.btn.micro-interaction'), {
+            backgroundColor: '#00A651',
+            duration: 0.3
+          });
+        }
+        const details = card.querySelector('.project-details');
+        if (details) {
+          details.setAttribute('aria-hidden', 'true');
         }
       });
     });
@@ -342,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (typeof particlesJS !== 'undefined') {
-    particlesJS('particles-js', {
+    const particlesConfig = {
       particles: {
         number: { value: 80, density: { enable: true, value_area: 800 } },
         color: { value: '#ffffff' },
@@ -358,50 +460,27 @@ document.addEventListener('DOMContentLoaded', () => {
         modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
       },
       retina_detect: true
-    });
+    };
+    particlesJS('particles-js', particlesConfig);
     const particlesContainer = document.getElementById('particles-js');
     if (particlesContainer) {
-      let timeout;
       particlesContainer.addEventListener('mouseenter', () => {
-        clearTimeout(timeout);
-        particlesJS('particles-js', {
-          particles: {
-            number: { value: 100, density: { enable: true, value_area: 800 } },
-            color: { value: '#ffffff' },
-            shape: { type: 'circle' },
-            opacity: { value: 0.7, random: true },
-            size: { value: 4, random: true },
-            line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.5, width: 1.5 },
-            move: { enable: true, speed: 3, direction: 'none', random: false }
-          },
-          interactivity: {
-            detect_on: 'canvas',
-            events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
-            modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
-          },
-          retina_detect: true
-        });
+        particlesConfig.particles.number.value = 100;
+        particlesConfig.particles.opacity.value = 0.7;
+        particlesConfig.particles.size.value = 4;
+        particlesConfig.particles.line_linked.opacity = 0.5;
+        particlesConfig.particles.line_linked.width = 1.5;
+        particlesConfig.particles.move.speed = 3;
+        particlesJS('particles-js', particlesConfig);
       });
       particlesContainer.addEventListener('mouseleave', () => {
-        timeout = setTimeout(() => {
-          particlesJS('particles-js', {
-            particles: {
-              number: { value: 80, density: { enable: true, value_area: 800 } },
-              color: { value: '#ffffff' },
-              shape: { type: 'circle' },
-              opacity: { value: 0.5, random: true },
-              size: { value: 3, random: true },
-              line_linked: { enable: true, distance: 150, color: '#ffffff', opacity: 0.4, width: 1 },
-              move: { enable: true, speed: 2, direction: 'none', random: false }
-            },
-            interactivity: {
-              detect_on: 'canvas',
-              events: { onhover: { enable: true, mode: 'repulse' }, onclick: { enable: true, mode: 'push' } },
-              modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
-            },
-            retina_detect: true
-          });
-        }, 300);
+        particlesConfig.particles.number.value = 80;
+        particlesConfig.particles.opacity.value = 0.5;
+        particlesConfig.particles.size.value = 3;
+        particlesConfig.particles.line_linked.opacity = 0.4;
+        particlesConfig.particles.line_linked.width = 1;
+        particlesConfig.particles.move.speed = 2;
+        particlesJS('particles-js', particlesConfig);
       });
     }
   }
@@ -410,9 +489,12 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.globalTimeline.clear();
   }
 
+  let refreshTimeout;
   window.addEventListener('resize', () => {
-    ScrollTrigger.refresh();
-    handleViewportChange();
+    clearTimeout(refreshTimeout);
+    refreshTimeout = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 200);
   });
 
   if (typeof ScrollReveal !== 'undefined') {
