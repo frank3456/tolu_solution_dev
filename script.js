@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // === VIEWPORT HANDLER (FIXED) ===
   function handleViewportChange() {
     const isDesktop = window.innerWidth >= 769;
     document.documentElement.style.setProperty('--viewport-width', `${window.innerWidth}px`);
     if (isDesktop) {
       document.body.style.width = '100%';
       document.body.style.overflowX = 'hidden';
-      // REMOVED: window.scrollTo(0, 0) + dispatchEvent('resize') → Caused infinite loop & flash
     }
   }
 
@@ -19,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', debounceViewportChange);
   window.addEventListener('orientationchange', handleViewportChange);
   window.addEventListener('load', handleViewportChange);
-
-  // === PRELOADER WITH TIMEOUT FALLBACK (CRITICAL FIX) ===
   const preloader = document.getElementById('preloader');
   const hidePreloader = () => {
     if (preloader) {
@@ -31,16 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 600);
     }
   };
-
-  // Force hide after 5s max
   const preloaderTimeout = setTimeout(hidePreloader, 5000);
 
   window.addEventListener('load', () => {
     clearTimeout(preloaderTimeout);
     hidePreloader();
   });
-
-  // === THEME TOGGLE (UNCHANGED) ===
   const themeToggle = document.querySelector('.theme-toggle');
   const themeDropdown = document.querySelector('.theme-dropdown');
   const themeOptions = document.querySelectorAll('.theme-option');
@@ -102,8 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  // === MOBILE MENU (UNCHANGED) ===
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (menuToggle && navLinks) {
@@ -146,16 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-
-  // === BACK TO TOP (UNCHANGED) ===
   const backToTop = document.getElementById('back-to-top');
   if (backToTop) {
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
-  // === TYPEWRITER (UNCHANGED) ===
   const typewriterElement = document.querySelector('.typewriter-text');
   if (typewriterElement) {
     const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
@@ -170,8 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     type();
   }
-
-  // === BUSINESS CALCULATOR (UNCHANGED) ===
   const calculateBtn = document.getElementById('calculate-btn');
   const resultDisplay = document.getElementById('result');
   if (calculateBtn && resultDisplay) {
@@ -199,8 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     });
   }
-
-  // === PALETTE GENERATOR (UNCHANGED) ===
   const generatePaletteBtn = document.getElementById('generate-palette');
   const paletteContainer = document.getElementById('palette-container');
   const toast = document.getElementById('toast');
@@ -267,8 +249,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     generatePaletteBtn.addEventListener('click', displayPalette);
   }
-
-  // === RESPONSIVE CHECKER (UNCHANGED) ===
   const openCheckerBtn = document.getElementById('open-checker-btn');
   const deviceModal = document.getElementById('device-modal');
   const closeModal = document.getElementById('close-modal');
@@ -337,16 +317,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-
-  // === GSAP & SCROLLTRIGGER (MOVED TO LOAD, SAFER) ===
   window.addEventListener('load', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
       if (window.matchMedia('(max-width: 480px)').matches) {
         gsap.config({ autoSleep: 60, force3D: false });
       }
-
-      // Back to top
       gsap.to('#back-to-top', {
         opacity: 1,
         duration: 0.5,
@@ -358,8 +334,6 @@ document.addEventListener('DOMContentLoaded', () => {
           toggleClass: 'show'
         }
       });
-
-      // Parallax
       document.querySelectorAll('.parallax-section').forEach(section => {
         const bg = section.querySelector('.hero-background') || section;
         gsap.to(bg, {
@@ -373,8 +347,6 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
-
-      // Cards animation (only if exist)
       const cards = document.querySelectorAll('.project-card, .tool-card');
       if (cards.length) {
         cards.forEach((card, index) => {
@@ -426,8 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
       }
-
-      // Other animations
       gsap.utils.toArray('.connect-card').forEach((card, index) => {
         gsap.from(card, {
           opacity: 0,
@@ -470,8 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
-
-    // === PARTICLES.JS (SAFE) ===
     if (typeof particlesJS !== 'undefined') {
       const particlesConfig = {
         particles: {
@@ -516,8 +484,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     }
-
-    // === REDUCED MOTION & SCROLLTRIGGER REFRESH ===
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof gsap !== 'undefined') {
       gsap.globalTimeline.clear();
     }
@@ -529,8 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       }, 200);
     });
-
-    // === SCROLLREVEAL (FALLBACK) ===
     if (typeof ScrollReveal !== 'undefined') {
       ScrollReveal().reveal('.section', {
         distance: '20px',
