@@ -26,7 +26,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
-  font-size: 70%;
+  font-size: 65%;
   box-sizing: inherit;
   -webkit-text-size-adjust: 100%;
 }
