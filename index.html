@@ -83,6 +83,108 @@
                 </div>
             </div>
         </section>
+<section style="padding: 100px 20px; background: #f8fafc; text-align: center; overflow: hidden;">
+  <h2 style="font-size: 2.8rem; margin-bottom: 1rem; color: #1e293b;">
+    Technologies I Work With
+  </h2>
+  <p style="color: #64748b; font-size: 1.2rem; margin-bottom: 4rem;">
+    I build fast, modern websites for my clients using these tools
+  </p>
+
+  <div style="position: relative;">
+    <div class="marquee">
+      <div class="track">
+        <div class="logo-item">
+          <img src="https://astro.build/assets/press/logomark-dark.svg" alt="Astro">
+          <span>Astro</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript">
+          <span>JavaScript</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="HTML5">
+          <span>HTML5</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS3">
+          <span>CSS3</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="Firebase">
+          <span>Firebase</span>
+        </div>
+
+        <!-- Duplicate set for seamless infinite loop -->
+        <div class="logo-item">
+          <img src="https://astro.build/assets/press/logomark-dark.svg" alt="Astro">
+          <span>Astro</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript">
+          <span>JavaScript</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="HTML5">
+          <span>HTML5</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original.svg" alt="CSS3">
+          <span>CSS3</span>
+        </div>
+        <div class="logo-item">
+          <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="Firebase">
+          <span>Firebase</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .marquee { overflow: hidden; white-space: nowrap; }
+  .track {
+    display: inline-flex;
+    animation: scroll 30s linear infinite;
+  }
+  .logo-item {
+    flex: 0 0 auto;
+    margin: 0 40px;
+    text-align: center;
+  }
+  .logo-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    transition: transform 0.3s;
+  }
+  .logo-item span {
+    display: block;
+    margin-top: 12px;
+    font-weight: 600;
+    color: #334155;
+  }
+  .logo-item:hover img { transform: scale(1.15); }
+
+  @keyframes scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* Pause when hovering */
+  .marquee:hover .track { animation-play-state: paused; }
+
+  /* Fade edges for premium look */
+  .marquee::before, .marquee::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; width: 100px; z-index: 1;
+  }
+  .marquee::before { left: 0; background: linear-gradient(to right, #f8fafc 0%, transparent 100%); }
+  .marquee::after  { right: 0; background: linear-gradient(to left, #f8fafc 0%, transparent 100%); }
+</style>
         <section id="projects" class="section" role="region" aria-labelledby="projects-title">
             <div class="section-content glass-card">
                 <h2 id="projects-title">Featured Work</h2>
@@ -95,7 +197,7 @@
                                 <div class="project-overlay" aria-hidden="true"></div>
                             </div>
                             <div class="project-content">
-                                <h3 id="project1-title">naijatruths.com</h3>
+                                <h3 id="project1-title">NaijaTruth.com</h3>
                                 <p class="project-subtitle">Nigerian news platform</p>
                                 <p class="project-desc">A mobile-first news website built for a client, featuring real-time news updates, user comments, and optimized for accessibility and low-bandwidth environments.</p>
                                 <div class="project-badges">
@@ -104,7 +206,7 @@
                                     <span class="badge">JavaScript</span>
                                 </div>
                                 <div class="project-links">
-                                    <a href="https://naijatruths.com/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NaijaTruth.com live site">View Project</a>
+                                    <a href="https://naijatruth.com" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NaijaTruth.com live site">View Project</a>
                                 </div>
                                 <div class="project-details" aria-hidden="true">
                                     <p>Challenges: Optimized for 3G networks.</p>
