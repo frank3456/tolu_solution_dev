@@ -64,7 +64,7 @@
         <div class="hero-content glass-card">
             <img src="tolu.jpg" alt="Tolu Ademuwagun, Web Developer and Economics Analyst" class="profile-pic" loading="lazy">
             <h1 id="hero-title">
-                <span class="typewriter-text" data-text="Building Digital Solutions That Empower"></span>
+                <span id="typed-text-output" class="typewriter-text" data-text="Building Digital Solutions That Empower"></span>
             </h1>
             <p class="hero-subtitle">Web Developer & Economics Analyst creating impactful, modern solutions for businesses and individuals.</p>
             <div class="button-container">
@@ -94,45 +94,26 @@
   <div style="position: relative;">
     <div class="marquee">
       <div class="track">
+
         <div class="logo-item">
           <img src="Astro.jpg" alt="Astro">
           <span>Astro</span>
         </div>
+
         <div class="logo-item">
           <img src="JavaScript.jpg" alt="JavaScript">
           <span>JavaScript</span>
         </div>
         <div class="logo-item">
-          <img src="HTML.jpg" alt="HTML5">
-          <span>HTML5</span>
+          <img src="HTML.jpg" alt="HTML">
+          <span>HTML</span>
         </div>
+
         <div class="logo-item">
-          <img src="CSS3.jpg" alt="CSS3">
-          <span>CSS3</span>
+          <img src="CSS.jpg" alt="CSS">
+          <span>CSS</span>
         </div>
-        <div class="logo-item">
-          <img src="Firebase.jpg" alt="Firebase">
-          <span>Firebase</span>
-        </div>
-        <div class="logo-item">
-          <img src="APIs.jpg" alt="APIs">
-          <span>APIs</span>
-        </div>
-        <div class="logo-item">
-          <img src="Astro.jpg" alt="Astro">
-          <span>Astro</span>
-        </div>
-        <div class="logo-item">
-          <img src="JavaScript.jpg" alt="JavaScript">
-          <span>JavaScript</span>
-        </div>
-        <div class="HTML5.jpg" alt="HTML5">
-          <span>HTML5</span>
-        </div>
-        <div class="logo-item">
-          <img src="CSS3.jpg" alt="CSS3">
-          <span>CSS3</span>
-        </div>
+
         <div class="logo-item">
           <img src="Firebase.jpg" alt="Firebase">
           <span>Firebase</span>
@@ -142,125 +123,210 @@
           <img src="APIs.jpg" alt="APIs">
           <span>APIs</span>
         </div>
+
+        <div class="logo-item">
+          <img src="Tailwind.jpg" alt="Tailwind">
+          <span>Tailwind</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="Astro.jpg" alt="Astro">
+          <span>Astro</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="JavaScript.jpg" alt="JavaScript">
+          <span>JavaScript</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="HTML.jpg" alt="HTML">
+          <span>HTML</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="CSS.jpg" alt="CSS3">
+          <span>CSS</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="Firebase.jpg" alt="Firebase">
+          <span>Firebase</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="APIs.jpg" alt="APIs">
+          <span>APIs</span>
+        </div>
+
+        <div class="logo-item">
+          <img src="Tailwind.jpg" alt="Tailwind">
+          <span>Tailwind</span>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  .marquee { overflow: hidden; white-space: nowrap; }
-  .track { display: inline-flex; animation: scroll 30s linear infinite; }
-  .logo-item { flex: 0 0 auto; margin: 0 40px; text-align: center; }
-  .logo-item img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); transition: transform 0.3s; }
-  .logo-item span { display: block; margin-top: 12px; font-weight: 600; color: #334155; }
-  .logo-item:hover img { transform: scale(1.15); }
-  @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-  .marquee:hover .track { animation-play-state: paused; }
-  .marquee::before, .marquee::after { content: ""; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 1; }
-  .marquee::before { left: 0; background: linear-gradient(to right, #f8fafc 0%, transparent 100%); }
-  .marquee::after { right: 0; background: linear-gradient(to left, #f8fafc 0%, transparent 100%); }
+  .marquee { 
+    overflow: hidden; 
+    white-space: nowrap; 
+    position: relative;
+  }
+  .track { 
+    display: inline-flex; 
+    animation: scroll 30s linear infinite; 
+  }
+  .logo-item { 
+    flex: 0 0 auto; 
+    margin: 0 40px; 
+    text-align: center; 
+  }
+  .logo-item img { 
+    width: 80px; 
+    height: 80px; 
+    object-fit: contain; 
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); 
+    transition: transform 0.3s; 
+  }
+  .logo-item span { 
+    display: block; 
+    margin-top: 12px; 
+    font-weight: 600; 
+    color: #334155; 
+  }
+  .logo-item:hover img { 
+    transform: scale(1.15); 
+  }
+  @keyframes scroll { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-50%); } 
+  }
+  .marquee:hover .track { 
+    animation-play-state: paused; 
+  }
+  .marquee::before, 
+  .marquee::after { 
+    content: ""; 
+    position: absolute; 
+    top: 0; 
+    bottom: 0; 
+    width: 100px; 
+    z-index: 1; 
+  }
+  .marquee::before { 
+    left: 0; 
+    background: linear-gradient(to right, #f8fafc 0%, transparent 100%); 
+  }
+  .marquee::after { 
+    right: 0; 
+    background: linear-gradient(to left, #f8fafc 0%, transparent 100%); 
+  }
 </style>
-        <section id="projects" class="section" role="region" aria-labelledby="projects-title">
-            <div class="section-content glass-card">
-                <h2 id="projects-title">Featured Work</h2>
-                <p class="section-subtitle">Explore my latest projects, blending innovation, design, and functionality.</p>
-                <div class="grid-wrapper">
-                    <div class="projects-grid">
-                        <article class="project-card glass-card micro-interaction" aria-labelledby="project1-title">
-                            <div class="project-image-wrapper">
-                                <img src="naija.jpg" alt="NaijaTruth.com hero image: Vibrant Nigerian cultural scene with green and white accents" class="project-img" loading="lazy">
-                                <div class="project-overlay" aria-hidden="true"></div>
-                            </div>
-                            <div class="project-content">
-                                <h3 id="project1-title">NaijaTruth.com</h3>
-                                <p class="project-subtitle">Nigerian news platform</p>
-                                <p class="project-desc">A mobile-first news website built for a client, featuring real-time news updates, user comments, and optimized for accessibility and low-bandwidth environments.</p>
-                                <div class="project-badges">
-                                    <span class="badge">HTML</span>
-                                    <span class="badge">CSS</span>
-                                    <span class="badge">JavaScript</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://naijatruth.com" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NaijaTruth.com live site">View Project</a>
-                                </div>
-                                <div class="project-details" aria-hidden="true">
-                                    <p>Challenges: Optimized for 3G networks.</p>
-                                    <p>Features: News aggregation, user comment system, and accessible design.</p>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="project-card glass-card micro-interaction" aria-labelledby="project2-title">
-                            <div class="project-image-wrapper">
-                                <img src="fordbank.jpg" alt="FordBank – Modern Banking Interface" class="project-img" loading="lazy">
-                                <div class="project-overlay" aria-hidden="true"></div>
-                            </div>
-                            <div class="project-content">
-                                <h3 id="project2-title">FordBank</h3>
-                                <p class="project-subtitle">Modern banking interface (Demo)</p>
-                                <p class="project-desc">A responsive banking web app with secure authentication, real-time transaction tracking, and seamless user experience powered by Firebase. <strong>This is a frontend prototype — no real banking or financial transactions occur.</strong></p>
-                                <div class="project-badges">
-                                    <span class="badge">HTML</span>
-                                    <span class="badge">CSS</span>
-                                    <span class="badge">JavaScript</span>
-                                    <span class="badge">Firebase</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://ford-bank.netlify.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View FordBank live demo">View Live Demo</a>
-                                </div>
-                                <div class="project-details" aria-hidden="true">
-                                    <p>Features: Firebase auth, real-time data sync, responsive dashboard.</p>
-                                    <p>Focus: Security, performance, and modern UI.</p>
-                                    <p><strong>Note:</strong> This is a sample project for demonstration purposes only.</p>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="project-card glass-card micro-interaction" aria-labelledby="project3-title">
-                            <div class="project-image-wrapper">
-                                <img src="insightiq-screenshot.jpg" alt="InsightIQ Analytics Landing Page" class="project-img" loading="lazy">
-                                <div class="project-overlay" aria-hidden="true"></div>
-                            </div>
-                            <div class="project-content">
-                                <h3 id="project3-title">InsightIQ Analytics</h3>
-                                <p class="project-subtitle">SaaS analytics platform</p>
-                                <p class="project-desc">A landing page designed to showcase a SaaS analytics platform with smooth animations and vibrant design.</p>
-                                <div class="project-badges">
-                                    <span class="badge">HTML5</span>
-                                    <span class="badge">CSS3</span>
-                                    <span class="badge">JavaScript</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://insight-iq-analytics-yvnm.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View InsightIQ Analytics live site">View Project</a>
-                                </div>
-                                <div class="project-details" aria-hidden="true">
-                                    <p>Features: Smooth scroll animations and responsive layout.</p>
-                                    <p>Focus: Optimized for performance and user engagement.</p>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="project-card glass-card micro-interaction" aria-labelledby="project4-title">
-                            <div class="project-image-wrapper">
-                                <img src="store-screenshot.jpg" alt="Tolu Solution Store" class="project-img" loading="lazy">
-                                <div class="project-overlay" aria-hidden="true"></div>
+  <section id="projects" class="section" role="region" aria-labelledby="projects-title">
+    <div class="section-content glass-card">
+        <h2 id="projects-title">What I’ve Been Building</h2>
+        <div class="grid-wrapper">
+            <div class="projects-grid">
+                
+                <article class="project-card glass-card micro-interaction" aria-labelledby="project1-title">
+                    <div class="project-image-wrapper">
+                        <img src="naija.jpg" alt="Naija Truths  hero image: Vibrant Nigerian cultural scene with green and white accents" class="project-img" loading="lazy">
+                        <div class="project-overlay" aria-hidden="true"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3 id="project1-title">Naija Truths</h3>
+                        <p class="project-subtitle"> News Platform | Firebase Integration</p>
+                        <p class="project-desc">Developed and deployed a client's mobile-first PWA for high-volume news delivery. Integrated Firebase to manage real-time news data and user comments, optimizing TTI in low-bandwidth areas.</p>
+                        <div class="project-badges">
+                            <span class="badge">Client Project</span>
+                            <span class="badge">Firebase Data</span>
+                            <span class="badge">PWA</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://naijatruths.com" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NaijaTruth.com live site">View Live Site</a>
+                        </div>
+                        <div class="project-details" aria-hidden="true">
+                            <p>Implemented: Responsive layout, client-side rendering for speed, WCAG 2.1 A11y compliance.</p>
+                            <p>Outcome: Optimized for 3G networks to ensure reliable content access for the target audience.</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="project-card glass-card micro-interaction" aria-labelledby="project2-title">
+                    <div class="project-image-wrapper">
+                        <img src="fordbank.jpg" alt="FordBank – Modern Banking Interface" class="project-img" loading="lazy">
+                        <div class="project-overlay" aria-hidden="true"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3 id="project2-title">FordBank</h3>
+                        <p class="project-subtitle">FinTech Dashboard Prototype | Full-Stack with Firebase</p>
+                        <p class="project-desc">Built a responsive banking interface prototype. Implemented backend logic using Firebase for user authentication and state management to simulate low-latency transaction tracking and secure access.</p>
+                        <div class="project-badges">
+                            <span class="badge">Firebase Backend</span>
+                            <span class="badge">State Management</span>
+                            <span class="badge">Modular JS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://fodbak.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View FordBank live demo">View Demo</a>
+                        </div>
+                        <div class="project-details" aria-hidden="true">
+                            <p>Focus: Security pattern implementation, component state management, and data synchronization.</p>
+                            <p>Note: This is a prototype demonstrating both front-end and Firebase backend functionality.</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="project-card glass-card micro-interaction" aria-labelledby="project3-title">
+                    <div class="project-image-wrapper">
+                        <img src="insightiq-screenshot.jpg" alt="InsightIQ Analytics Landing Page" class="project-img" loading="lazy">
+                        <div class="project-overlay" aria-hidden="true"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3 id="project3-title">InsightIQ Analytics</h3>
+                        <p class="project-subtitle">High-Performance Landing Page Prototype </p>
+                        <p class="project-desc">A marketing landing page optimized for conversion and speed. Implemented the Intersection Observer API for performant scroll effects and efficient lazy-loading of assets.</p>
+                        <div class="project-badges">
+                            <span class="badge">Astro</span>
+                            <span class="badge">Intersection Observer</span>
+                            <span class="badge">Performance</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://insight-iq-analytics-yvnm.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View InsightIQ Analytics live site">View Project</a>
+                        </div>
+                        <div class="project-details" aria-hidden="true">
+                            <p>Features: Optimized asset loading, clear CTA hierarchy, responsive design.</p>
+                            <p>Focus: Utilizing modern browser APIs and architecture for seamless user engagement.</p>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="project-card glass-card micro-interaction" aria-labelledby="project4-title">
+                    <div class="project-image-wrapper">
+                        <img src="store-screenshot.jpg" alt="Tolu Solution Store" class="project-img" loading="lazy">
+                        <div class="project-overlay" aria-hidden="true"></div>
                             </div>
                             <div class="project-content">
                                 <h3 id="project4-title">Tolu Solution Store</h3>
-                                <p class="project-subtitle">E-commerce platform</p>
-                                <p class="project-desc">A responsive e-commerce platform with intuitive navigation and a simulated checkout experience.</p>
+                                <p class="project-subtitle">E-commerce Prototype | State Management</p>
+                                <p class="project-desc">A responsive e-commerce platform simulating product state management and checkout flows. Built using a vanilla JavaScript component structure to manage complex front-end interactions effectively.</p>
                                 <div class="project-badges">
-                                    <span class="badge">HTML</span>
-                                    <span class="badge">CSS</span>
-                                    <span class="badge">JavaScript</span>
-                                    <span class="badge">React</span>
+                                    <span class="badge">Component Structure</span>
+                                    <span class="badge">State Management</span>
+                                    <span class="badge">Vanilla JS</span>
                                 </div>
                                 <div class="project-links">
-                                    <a href="https://tolu-solution-store.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Visit Tolu Solution Store">Visit Store</a>
+                                    <a href="https://tolu-solution-store.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Visit Tolu Solution Store">View Store</a>
                                 </div>
                                 <div class="project-details" aria-hidden="true">
-                                    <p>Features: Product listings and checkout flow simulation.</p>
-                                    <p>Focus: User-friendly design and mobile responsiveness.</p>
+                                    <p>Features: Dynamic cart simulation, product filtering, MVC pattern implementation.</p>
+                                    <p>Focus: Maintainable code organization and implementing complex user flows.</p>
                                 </div>
                             </div>
                         </article>
+                        
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project5-title">
                             <div class="project-image-wrapper">
                                 <img src="dashnext-screenshot.jpg" alt="NexaDash Analytics Dashboard" class="project-img" loading="lazy">
@@ -268,22 +334,23 @@
                             </div>
                             <div class="project-content">
                                 <h3 id="project5-title">NexaDash Analytics</h3>
-                                <p class="project-subtitle">Data dashboard</p>
-                                <p class="project-desc">A dashboard designed for data visualization with dark mode and interactive charts.</p>
+                                <p class="project-subtitle">Data Visualization Dashboard Prototype</p>
+                                <p class="project-desc">Engineered a dashboard optimized for data visualization and reporting. Features integration of a charting library and a state-managed dark mode using CSS variables for high usability and theming flexibility.</p>
                                 <div class="project-badges">
-                                    <span class="badge">HTML5</span>
-                                    <span class="badge">CSS3</span>
-                                    <span class="badge">JavaScript</span>
+                                    <span class="badge">Data Viz</span>
+                                    <span class="badge">State Management</span>
+                                    <span class="badge">CSS Variables</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://dash-next-kvem.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View NexaDash Analytics">View Dashboard</a>
                                 </div>
                                 <div class="project-details" aria-hidden="true">
-                                    <p>Features: Interactive charts and theme toggling.</p>
-                                    <p>Focus: Real-time data display and usability.</p>
+                                    <p>Features: Interactive chart elements, modular theming, responsive data tables.</p>
+                                    <p>Focus: Clean information architecture and high refresh rate design.</p>
                                 </div>
                             </div>
                         </article>
+                        
                         <article class="project-card glass-card micro-interaction" aria-labelledby="project6-title">
                             <div class="project-image-wrapper">
                                 <img src="aerovue-alpha-screenshot.jpg" alt="Aerovue Alpha Streaming Platform" class="project-img" loading="lazy">
@@ -291,50 +358,51 @@
                             </div>
                             <div class="project-content">
                                 <h3 id="project6-title">Aerovue Alpha</h3>
-                                <p class="project-subtitle">Video streaming platform</p>
-                                <p class="project-desc">A responsive streaming service designed for smooth video playback and adaptive layouts.</p>
+                                <p class="project-subtitle">Adaptive Video Streaming UI Prototype</p>
+                                <p class="project-desc">A high-fidelity prototype of a media streaming service interface. Utilizes modern CSS Grid and Flexbox for complex, adaptive layouts to simulate optimal viewing across diverse devices.</p>
                                 <div class="project-badges">
-                                    <span class="badge">HTML5</span>
-                                    <span class="badge">CSS3</span>
-                                    <span class="badge">JavaScript</span>
+                                    <span class="badge">CSS Grid/Flexbox</span>
+                                    <span class="badge">Adaptive Layouts</span>
+                                    <span class="badge">UI/UX Prototype</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="https://aerovue-alpha.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="View Aerovue Alpha">View Project</a>
                                 </div>
                                 <div class="project-details" aria-hidden="true">
-                                    <p>Features: Adaptive streaming and responsive design.</p>
-                                    <p>Focus: Optimized for low-bandwidth environments.</p>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="project-card glass-card micro-interaction" aria-labelledby="project7-title">
-                            <div class="project-image-wrapper">
-                                <img src="palettecraft-screenshot.jpg" alt="PaletteCraft Color Tool" class="project-img" loading="lazy">
-                                <div class="project-overlay" aria-hidden="true"></div>
-                            </div>
-                            <div class="project-content">
-                                <h3 id="project7-title">PaletteCraft</h3>
-                                <p class="project-subtitle">Color palette tool</p>
-                                <p class="project-desc">A tool for designers and developers to generate and preview color palettes.</p>
-                                <div class="project-badges">
-                                    <span class="badge">HTML5</span>
-                                    <span class="badge">CSS3</span>
-                                    <span class="badge">JavaScript</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="https://design-mixology.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Try PaletteCraft">Try PaletteCraft</a>
-                                </div>
-                                <div class="project-details" aria-hidden="true">
-                                    <p>Features: Instant color previews and contrast checker.</p>
-                                    <p>Focus: Accessibility and ease of use.</p>
-                                </div>
-                            </div>
-                        </article>
+                            <p>Features: Responsive navigation, complex card structures, smooth media handling.</p>
+                            <p>Focus: Demonstrating expertise in creating robust, scalable interfaces.</p>
+                        </div>
                     </div>
-                </div>
+                </article>
+                
+                <article class="project-card glass-card micro-interaction" aria-labelledby="project7-title">
+                    <div class="project-image-wrapper">
+                        <img src="palettecraft-screenshot.jpg" alt="PaletteCraft Color Tool" class="project-img" loading="lazy">
+                        <div class="project-overlay" aria-hidden="true"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3 id="project7-title">PaletteCraft</h3>
+                        <p class="project-subtitle">Accessibility Utility Tool Prototype</p>
+                        <p class="project-desc">A developer tool to generate and validate color palettes. Core functionality includes dynamic WCAG contrast checking and programmatic color manipulation using the DOM and Math APIs.</p>
+                        <div class="project-badges">
+                            <span class="badge">WCAG Validation</span>
+                            <span class="badge">DOM Manipulation</span>
+                            <span class="badge">Utility Tooling</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://design-mixology.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn micro-interaction" aria-label="Try PaletteCraft">Try Tool</a>
+                        </div>
+                        <div class="project-details" aria-hidden="true">
+                            <p>Features: Instant color previews, reliable contrast checker, HSL/RGB conversion.</p>
+                            <p>Focus: Practical application of accessibility standards and mathematical precision.</p>
+                        </div>
+                    </div>
+                </article>
+                
             </div>
-        </section>
+        </div>
     </div>
+</section>
     <section id="tools" class="section parallax-section" role="region" aria-labelledby="tools-title">
         <div class="section-content glass-card">
             <h2 id="tools-title">Interactive Tools</h2>

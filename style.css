@@ -115,14 +115,20 @@ p,
 .color-label {
   font-family: 'Inter', sans-serif;
   font-size: clamp(1.3rem, 1.8vw, 1.6rem);
-  color: var(--text-muted);
+  color: var(--text); 
 }
 
 body.dark-mode p,
 body.dark-mode .hero-subtitle,
 body.dark-mode .section-subtitle {
-  color: var(--dark-text-muted);
+  color: var(--dark-text-muted); 
 }
+
+/* FIX: Ensure high contrast for about-text paragraphs in dark mode */
+body.dark-mode .about-text p {
+  color: var(--dark-text); 
+}
+
 
 .connect-label,
 .color-label {
@@ -210,6 +216,26 @@ body.dark-mode .preloader-tagline {
   }
 }
 
+
+@keyframes subtle-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+
+.typewriter-pen {
+  display: inline-block;
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  animation: subtle-blink 1.2s infinite step-end;
+}
+
+
 .glass-nav {
   position: sticky;
   top: 0;
@@ -260,6 +286,20 @@ body.dark-mode .logo a {
   list-style: none;
   align-items: center;
 }
+
+/* --- MODIFIED/NEW BLOCK START --- */
+.nav-link {
+  /* Ensure no default underline */
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2vw, 1.6rem);
+  position: relative;
+  transition: color 0.3s ease, transform 0.2s ease, text-shadow 0.3s ease;
+  display: block; /* Important for full click area */
+  padding: 0.5rem 0; /* Add padding for better hover/click area */
+}
+/* --- MODIFIED/NEW BLOCK END --- */
 
 body.dark-mode .nav-link {
   color: var(--dark-text);
@@ -431,6 +471,40 @@ body.dark-mode .nav-links.active {
 .nav-links.active .theme-toggle {
   margin: 1rem 0;
 }
+
+/* --- MODIFIED/NEW BLOCK START (Targeting links in active menu for special color) --- */
+.nav-links.active .nav-link {
+  /* Set the text color of the links in the open mobile menu to secondary color */
+  color: var(--secondary); 
+  /* Remove underline from links in active mobile menu */
+  text-decoration: none;
+  padding: 1rem 0;
+  /* Reset the transform from desktop hover for a cleaner mobile look */
+  transform: none; 
+}
+
+/* Make the color a darker blue on hover/tap in the mobile menu */
+.nav-links.active .nav-link:hover {
+  color: var(--primary); 
+  transform: none; /* Keep the hover simple */
+}
+
+/* Ensure Dark Mode compatibility */
+body.dark-mode .nav-links.active .nav-link {
+  color: var(--secondary); /* Use secondary in dark mode for contrast */
+}
+
+body.dark-mode .nav-links.active .nav-link:hover {
+  color: var(--nigerian-green); /* Use a high-contrast color on hover */
+}
+
+.nav-links.active .nav-link::after {
+  /* Explicitly hide the custom underline on all links in the active menu */
+  width: 0 !important;
+  content: none;
+}
+/* --- MODIFIED/NEW BLOCK END --- */
+
 
 @keyframes slideDown {
   from {
@@ -763,7 +837,7 @@ body.dark-mode .project-card.glass-card {
 .project-subtitle {
   font-size: clamp(1.2rem, 1.5vw, 1.4rem);
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text);
   margin-bottom: 0.5rem;
 }
 
@@ -1043,6 +1117,85 @@ body.dark-mode .close.micro-interaction {
 .device-btn.micro-interaction:hover {
   background: var(--secondary);
 }
+
+
+.device-frame {
+  position: relative;
+  width: 37.5rem;
+  height: 81.2rem;
+  background: #000;
+  border-radius: 5rem;
+  box-shadow: 
+    0 0 0 1.2rem #222,
+    0 0 0 1.5rem #444,
+    0 0 2rem rgba(0, 0, 0, 0.6);
+  margin: 3rem auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.device-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14rem;
+  height: 3rem;
+  background: #000;
+  border-bottom-left-radius: 1.5rem;
+  border-bottom-right-radius: 1.5rem;
+  z-index: 10;
+}
+
+.device-screen {
+  flex-grow: 1;
+  background: #ffffff;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 3rem;
+}
+
+body.dark-mode .device-screen {
+  background: var(--dark-bg);
+}
+
+.device-header {
+  position: fixed;
+  top: 3rem; 
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+}
+
+body.dark-mode .device-header {
+  background: var(--dark-glass-bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.device-header h3 {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.device-header-icon {
+  font-size: 1.8rem;
+  color: var(--text);
+}
+
+body.dark-mode .device-header-icon {
+  color: var(--dark-text);
+}
+
 
 .connect-section.parallax-section {
   padding: 6rem 2rem;
@@ -1328,92 +1481,16 @@ body.dark-mode .toast.glass-card {
     width: 3rem;
   }
   .device-frame {
-    width: 100% !important;
+    width: 90% !important;
     height: auto !important;
-    aspect-ratio: 375 / 667;
-    max-width: 90%;
-    margin: 0 auto;
-    border: 2px solid var(--glass-border);
-    border-radius: 1rem;
+    aspect-ratio: 375 / 812;
+    max-width: 40rem;
   }
-}
-
-@media (min-width: 1920px) {
-  .section {
-    padding: 6rem 4rem;
-    max-width: 1920px;
+  .device-screen {
+    padding-top: 3.5rem;
   }
-  .section-content.glass-card {
-    max-width: 150rem;
-  }
-  .projects-grid,
-  .tools-grid {
-    max-width: 150rem;
-  }
-  .hero.parallax-section {
-    min-height: 100vh;
-  }
-  .connect-grid {
-    max-width: 100rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-.typewriter-text {
-  position: relative;
-  display: inline-block;
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(2rem, 3vw, 2.5rem);
-  color: var(--hero-text);
-}
-
-body.dark-mode .typewriter-text {
-  color: var(--dark-text);
-}
-
-.typed-text {
-  display: inline;
-}
-
-.modern-caret {
-  display: inline-block;
-  width: 3px;
-  height: 1.2em;
-  background: linear-gradient(45deg, var(--secondary), var(--primary));
-  vertical-align: middle;
-  margin-left: 4px;
-  animation: glow 1.5s ease-in-out infinite;
-  box-shadow: var(--glow);
-}
-
-body.dark-mode .modern-caret {
-  background: linear-gradient(45deg, var(--secondary), #ffffff);
-}
-
-@keyframes glow {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.5), 0 0 12px rgba(6, 182, 212, 0.3);
-  }
-  50% {
-    opacity: 0.7;
-    box-shadow: 0 0 12px rgba(6, 182, 212, 0.8), 0 0 18px rgba(6, 182, 212, 0.5);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .device-header {
+    top: 3.5rem;
+    padding: 0.6rem 1rem;
   }
 }

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', debounceViewportChange);
   window.addEventListener('orientationchange', handleViewportChange);
   window.addEventListener('load', handleViewportChange);
+
   const preloader = document.getElementById('preloader');
   const hidePreloader = () => {
     if (preloader) {
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(preloaderTimeout);
     hidePreloader();
   });
+
   const themeToggle = document.querySelector('.theme-toggle');
   const themeDropdown = document.querySelector('.theme-dropdown');
   const themeOptions = document.querySelectorAll('.theme-option');
@@ -94,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (menuToggle && navLinks) {
@@ -136,26 +139,35 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
   const backToTop = document.getElementById('back-to-top');
   if (backToTop) {
     backToTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
   const typewriterElement = document.querySelector('.typewriter-text');
   if (typewriterElement) {
     const text = typewriterElement.dataset.text || 'Building Digital Solutions That Empower';
     let i = 0;
-    typewriterElement.innerHTML = '<span class="typed-text"></span><span class="modern-caret"></span>';
+    typewriterElement.innerHTML = '<span class="typed-text"></span><span class="typewriter-pen">✍️</span>';
     const typedTextElement = typewriterElement.querySelector('.typed-text');
+    const penElement = typewriterElement.querySelector('.typewriter-pen');
+
     function type() {
       if (i < text.length) {
         typedTextElement.textContent += text.charAt(i++);
         setTimeout(type, 100);
+      } else {
+        if (penElement) {
+            penElement.style.opacity = 0;
+        }
       }
     }
     type();
   }
+
   const calculateBtn = document.getElementById('calculate-btn');
   const resultDisplay = document.getElementById('result');
   if (calculateBtn && resultDisplay) {
@@ -183,6 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     });
   }
+
   const generatePaletteBtn = document.getElementById('generate-palette');
   const paletteContainer = document.getElementById('palette-container');
   const toast = document.getElementById('toast');
@@ -195,6 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
       ['#3b82f6', '#9333ea', '#f43f5e', '#22c55e', '#f59e0b'],
       ['#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1', '#5f27cd']
     ];
+    function showToast(message, isError = false) {
+      clearTimeout(toastTimeout);
+      toast.textContent = message;
+      toast.style.backgroundColor = isError ? '#ef4444' : 'var(--secondary)';
+      toast.classList.add('show');
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+        toast.textContent = '';
+      }, 2500);
+    }
     function displayPalette() {
       paletteContainer.innerHTML = '';
       paletteContainer.classList.add('active');
@@ -210,13 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         colorCard.appendChild(label);
         colorCard.addEventListener('click', () => {
           navigator.clipboard.writeText(color).then(() => {
-            clearTimeout(toastTimeout);
-            toast.textContent = `Success: ${color} copied!`;
-            toast.classList.add('show');
-            toastTimeout = setTimeout(() => {
-              toast.classList.remove('show');
-              toast.textContent = '';
-            }, 2500);
+            showToast(`Success: ${color} copied!`);
           });
         });
         paletteContainer.appendChild(colorCard);
@@ -236,93 +253,111 @@ document.addEventListener('DOMContentLoaded', () => {
       copyAllBtn.setAttribute('aria-label', 'Copy all colors');
       copyAllBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(colors.join(', ')).then(() => {
-          clearTimeout(toastTimeout);
-          toast.textContent = 'Success: All colors copied!';
-          toast.classList.add('show');
-          toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-            toast.textContent = '';
-          }, 2500);
+          showToast('Success: All colors copied!');
         });
       });
       paletteContainer.appendChild(copyAllBtn);
     }
     generatePaletteBtn.addEventListener('click', displayPalette);
   }
+
   const openCheckerBtn = document.getElementById('open-checker-btn');
   const deviceModal = document.getElementById('device-modal');
   const closeModal = document.getElementById('close-modal');
   const deviceButtons = document.querySelectorAll('.device-btn');
   const siteUrlInput = document.getElementById('site-url');
   const devicePreviewContainer = document.getElementById('device-preview-container');
+  
   if (openCheckerBtn && deviceModal && closeModal && deviceButtons.length && siteUrlInput && devicePreviewContainer) {
+    
+    function showToast(message, isError = false) {
+        clearTimeout(toastTimeout);
+        const toast = document.getElementById('toast');
+        if (toast) {
+            toast.textContent = message;
+            toast.style.backgroundColor = isError ? '#ef4444' : 'var(--secondary)';
+            toast.classList.add('show');
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+                toast.textContent = '';
+            }, 2500);
+        }
+    }
+    
     openCheckerBtn.addEventListener('click', () => {
       deviceModal.style.display = 'flex';
       siteUrlInput.focus();
     });
+
     closeModal.addEventListener('click', () => {
       deviceModal.style.display = 'none';
       devicePreviewContainer.innerHTML = '';
     });
+
     window.addEventListener('click', e => {
       if (e.target === deviceModal) {
         deviceModal.style.display = 'none';
         devicePreviewContainer.innerHTML = '';
       }
     });
+
     window.addEventListener('keydown', e => {
       if (e.key === 'Escape' && deviceModal.style.display === 'flex') {
         deviceModal.style.display = 'none';
         devicePreviewContainer.innerHTML = '';
       }
     });
+
     deviceButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         const device = btn.getAttribute('data-device');
-        const url = siteUrlInput.value.trim();
-        if (!/^https?:\/\//.test(url)) {
-          clearTimeout(toastTimeout);
-          toast.textContent = 'Error: Please enter a valid URL (e.g., https://example.com)';
-          toast.classList.add('show');
-          toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-            toast.textContent = '';
-          }, 2500);
+        let url = siteUrlInput.value.trim();
+
+        if (url === '' || !/^https?:\/\//i.test(url)) {
+          showToast('Error: Please enter a valid URL (e.g., https://example.com)', true);
           return;
         }
+
         const dimensions = {
-          mobile: { width: 375, height: 667 },
-          tablet: { width: 768, height: 1024 },
-          desktop: { width: 1280, height: 720 }
+          mobile: { width: 375, height: 812, frameClass: 'device-frame' },
+          tablet: { width: 768, height: 1024, frameClass: 'device-frame tablet' },
+          desktop: { width: 1280, height: 720, frameClass: 'device-frame desktop' }
         }[device];
-        const iframe = document.createElement('iframe');
-        iframe.src = url;
-        iframe.width = dimensions.width;
-        iframe.height = dimensions.height;
-        iframe.className = 'device-frame';
-        iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-forms');
-        iframe.setAttribute('aria-label', `Preview of ${url} on ${device}`);
-        iframe.onerror = () => {
-          clearTimeout(toastTimeout);
-          toast.textContent = 'Error: Failed to load URL. Try another site.';
-          toast.classList.add('show');
-          toastTimeout = setTimeout(() => {
-            toast.classList.remove('show');
-            toast.textContent = '';
-          }, 2500);
-        };
-        devicePreviewContainer.innerHTML = '';
-        devicePreviewContainer.appendChild(iframe);
+
+        if (!dimensions) return;
+
+        const frameHTML = `
+            <div class="${dimensions.frameClass}" style="width: ${dimensions.width / 10}rem; height: ${dimensions.height / 10}rem;">
+                ${device !== 'desktop' ? '' : ''}
+                <div class="device-screen">
+                    <iframe 
+                        src="${url}" 
+                        sandbox="allow-same-origin allow-scripts allow-forms"
+                        aria-label="Preview of ${url} on ${device}"
+                        width="100%" 
+                        height="100%"
+                        style="border: none; display: block;"
+                    ></iframe>
+                </div>
+                ${device !== 'desktop' ? '<div class="device-header"><h3>Live Preview</h3><i class="fas fa-signal device-header-icon"></i></div>' : ''}
+            </div>
+        `;
+        
+        devicePreviewContainer.innerHTML = frameHTML;
+        
         deviceModal.style.display = 'none';
       });
     });
   }
+
   window.addEventListener('load', () => {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.registerPlugin(ScrollTrigger);
+
       if (window.matchMedia('(max-width: 480px)').matches) {
         gsap.config({ autoSleep: 60, force3D: false });
       }
+
       gsap.to('#back-to-top', {
         opacity: 1,
         duration: 0.5,
@@ -334,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
           toggleClass: 'show'
         }
       });
+
       document.querySelectorAll('.parallax-section').forEach(section => {
         const bg = section.querySelector('.hero-background') || section;
         gsap.to(bg, {
@@ -347,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         });
       });
+
       const cards = document.querySelectorAll('.project-card, .tool-card');
       if (cards.length) {
         cards.forEach((card, index) => {
@@ -398,6 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         });
       }
+
       gsap.utils.toArray('.connect-card').forEach((card, index) => {
         gsap.from(card, {
           opacity: 0,
@@ -417,6 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.utils.toArray('.nav-link').forEach((link, index) => {
         gsap.from(link, { opacity: 0, x: -20, duration: 0.5, ease: 'power2.out', delay: 0.2 * index });
       });
+
       gsap.from('.palette-container', {
         opacity: 0,
         scale: 0.9,
@@ -440,6 +479,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
+
     if (typeof particlesJS !== 'undefined') {
       const particlesConfig = {
         particles: {
@@ -462,28 +502,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const particlesContainer = document.getElementById('particles-js');
       if (particlesContainer) {
+        let particleUpdateTimeout;
+        const updateParticles = (newConfig) => {
+            clearTimeout(particleUpdateTimeout);
+            particleUpdateTimeout = setTimeout(() => {
+                particlesJS('particles-js', newConfig);
+            }, 50); 
+        };
+
         particlesContainer.addEventListener('mouseenter', () => {
-          Object.assign(particlesConfig.particles, {
-            number: { value: 100 },
-            opacity: { value: 0.7 },
-            size: { value: 4 },
+          const hoverConfig = JSON.parse(JSON.stringify(particlesConfig));
+          Object.assign(hoverConfig.particles, {
+            number: { value: 100, density: { enable: true, value_area: 800 } },
+            opacity: { value: 0.7, random: true },
+            size: { value: 4, random: true },
             line_linked: { opacity: 0.5, width: 1.5 },
             move: { speed: 3 }
           });
-          particlesJS('particles-js', particlesConfig);
+          updateParticles(hoverConfig);
         });
+
         particlesContainer.addEventListener('mouseleave', () => {
-          Object.assign(particlesConfig.particles, {
-            number: { value: 80 },
-            opacity: { value: 0.5 },
-            size: { value: 3 },
-            line_linked: { opacity: 0.4, width: 1 },
-            move: { speed: 2 }
-          });
-          particlesJS('particles-js', particlesConfig);
+          updateParticles(particlesConfig);
         });
       }
     }
+    
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeof gsap !== 'undefined') {
       gsap.globalTimeline.clear();
     }
