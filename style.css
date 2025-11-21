@@ -1315,6 +1315,43 @@ body.dark-mode .toast.glass-card {
   .menu-toggle {
     display: none;
   }
+  
+  /* === PERFORMANCE OPTIMIZATIONS FOR DESKTOP (>= 769px) === */
+
+  /* 1. Disable expensive backdrop-filter on Navigation Bar */
+  .glass-nav {
+    backdrop-filter: none; /* Disabling the blur improves scroll performance significantly */
+    /* Adjust background opacity to compensate for the loss of blur effect */
+    background: rgba(248, 250, 252, 0.95); 
+  }
+  body.dark-mode .glass-nav {
+    backdrop-filter: none;
+    background: rgba(15, 23, 42, 0.95);
+  }
+
+  /* 2. Disable expensive backdrop-filter on ALL .glass-card elements */
+  .hero-content.glass-card,
+  .section-content.glass-card,
+  .project-card.glass-card,
+  .tool-card.glass-card,
+  .connect-card.glass-card {
+    backdrop-filter: none !important; 
+    /* Use !important to override any other blur properties if needed */
+  }
+
+  /* 3. Simplify 3D Hover Effects on Project Cards */
+  .project-card.glass-card.micro-interaction:hover {
+    /* Replaced 3D rotateX(2deg) rotateY(2deg) with a simple 2D transform */
+    transform: translateY(-0.8rem);
+    /* Reduced shadow size, as complex shadows with 3D are expensive */
+    box-shadow: 0 0.8rem 1.5rem rgba(0, 0, 0, 0.12);
+  }
+  
+  /* 4. Simplify Hover Effects on Connect Cards (Remove subtle rotation) */
+  .connect-card.glass-card.micro-interaction:hover {
+      transform: scale(1.05); /* Keep simple scale, remove rotate(1deg) */
+      /* Keep existing background and shadow rules */
+  }
 }
 
 @media (max-width: 480px) {
