@@ -175,7 +175,8 @@ body.dark-mode .preloader {
 }
 
 .preloader-icon::before {
-  content: 'T';
+  /* CHANGED FROM 'T' TO 'F' */
+  content: 'F';
   font-family: 'Lora', serif;
   font-size: 60px;
   font-weight: 700;
