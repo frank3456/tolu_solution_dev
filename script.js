@@ -202,8 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 500);
     });
   }
-  
-  // Removed: Color Palette Generator code (generatePaletteBtn, palettes array, displayPalette function, event listener)
 
   const openCheckerBtn = document.getElementById('open-checker-btn');
   const deviceModal = document.getElementById('device-modal');
